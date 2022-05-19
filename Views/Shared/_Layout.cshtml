@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html> 
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>@ViewBag.Title - My Telerik MVC Application</title>
+
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
+
+    	<link href="https://cdn.kendostatic.com/2021.3.1207/styles/kendo.common-bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdn.kendostatic.com/2021.3.1207/styles/kendo.bootstrap-main.min.css" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.kendostatic.com/2021.3.1207/js/jquery.min.js"></script>
+	<script src="https://cdn.kendostatic.com/2021.3.1207/js/jszip.min.js"></script>
+	<script src="https://cdn.kendostatic.com/2021.3.1207/js/kendo.all.min.js"></script>
+	<script src="https://cdn.kendostatic.com/2021.3.1207/js/kendo.aspnetmvc.min.js"></script>
+	<script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+</head>
+    <body>
+        @RenderBody()
+    </body>
+</html>
