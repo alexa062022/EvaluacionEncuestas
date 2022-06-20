@@ -1,25 +1,99 @@
 ﻿<!DOCTYPE html>
 <html> 
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>@ViewBag.Title - My Telerik MVC Application</title>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PGR | @ViewBag.Title </title>
 
-        @Scripts.Render("~/bundles/modernizr")
-        @Scripts.Render("~/bundles/jquery")
+    <link href="https://kendo.cdn.telerik.com/2021.3.914/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/kendo.aspnetmvc.min.js"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/messages/kendo.messages.es-ES.min.js"></script>
+    @Styles.Render("~/Content/all.min.css")
+    @Styles.Render("~/bundles/css")
 
-    	<link href="https://cdn.kendostatic.com/2021.3.1207/styles/kendo.common-bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="https://cdn.kendostatic.com/2021.3.1207/styles/kendo.bootstrap-main.min.css" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-	<script src="https://cdn.kendostatic.com/2021.3.1207/js/jquery.min.js"></script>
-	<script src="https://cdn.kendostatic.com/2021.3.1207/js/jszip.min.js"></script>
-	<script src="https://cdn.kendostatic.com/2021.3.1207/js/kendo.all.min.js"></script>
-	<script src="https://cdn.kendostatic.com/2021.3.1207/js/kendo.aspnetmvc.min.js"></script>
-	<script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    @*<link rel="icon" type="image/png" href="~/Images/favIconED.png" title="Evaluación del Desempeño" sizes="45x43">*@
+    @*<script src="~/Scripts/UtilidadesGenericas.js"></script>*@
+
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
 </head>
     <body>
-        @RenderBody()
+        <nav class="navbar navbar-expand-lg navbar-dark barraMenu">
+            <div class="container">
+                @Html.ActionLink("Evaluación de Servicios PGR", "Index", "Escritorio", new { area = "" }, new { @class = "navbar-brand" })
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-flex justify-content-between">
+                    <ul class="nav navbar-nav mr-auto">
+                        <li class="nav-item ItemMenuPadre">
+                            @Html.ActionLink("Ir a...", "Index", "Escritorio", null, new { @class = "nav-link" })
+                            <ul>
+
+                                @*<li>@Html.ActionLink("Catalogos", "Index", "Catalogos", null, new { @class = "nav-link" })</li>
+                                <li class="nav-item">@Html.ActionLink("Firmador", "Index", "Documentos_Firmas", null, new { @class = "nav-link" })</li>*@
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">@Html.ActionLink("Tutoriales", "Index", "Tutoriales", null, new { @class = "nav-link" })</li>
+
+                    </ul>
+
+                    @*@if (Helper.SessionHelper.ExistUserInSession())
+                    {
+                        <div class="d-flex  flex-row-reverse">
+                            <div class="text-center well">
+                                Bienvenido(a), <b>@PGREvaluacion.Models.Common.FrontUser.Get().Nombre</b> [<a href="~/Escritorio/salir">Finalizar sesión</a>]
+                            </div>
+                        </div>
+                    }*@
+                </div>
+
+                <ul class="nav nav-pills">
+                </ul>
+
+            </div>
+        </nav>
+
+        <main>
+            <div class="container body-content">
+
+                @*@Html.MvcSiteMap().SiteMapPath()*@
+                @RenderBody()
+            </div>
+        </main>
+
+        <div class="tituloFooter footerInterno">
+            @Html.ActionLink("Evaluación de Servicios PGR", "Index", "Escritorio")
+        </div>
+        <footer class="container-fluid">
+
+            <div class="container">
+                <p class="d-flex justify-content-center">Procuradur&iacute;a General de la Rep&uacute;blica</p>
+                <p class="d-flex justify-content-center">&copy; @DateTime.Now.Year - PGR</p>
+            </div>
+        </footer>
+
+        <script>
+            $(document).ready(function () {
+                $("#responsive-panel").kendoResponsivePanel({
+                    breakpoint: 768,
+                    autoClose: false,
+                    orientation: "top"
+                });
+            });
+            function onclick(e) {
+                $("#responsive-panel").getKendoResponsivePanel().toggle();
+            }
+        </script>
+
+        @RenderSection("scripts", required: false)
+
     </body>
 </html>
