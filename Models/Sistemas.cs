@@ -13,6 +13,7 @@ namespace EvaluacionServicios.Models
     {        
         public string idSistema { get; set; }
 
+        //[Required(ErrorMessage = "Title is required.")]
         [Display(Name = "Nombre del Sistema")]
         public string NombreSistema { get; set; }
 
@@ -23,7 +24,7 @@ namespace EvaluacionServicios.Models
         public int Activo { get; set; } //1 = Activo, 0 = Inactivo
 
         [Display(Name = "Fecha Ingreso")]
-        public string FechaIngreso { get; set; }
+        public DateTime FechaIngreso { get; set; }
 
         [Display(Name = "Usuario")]
         public int CedulaUsuario { get; set; }

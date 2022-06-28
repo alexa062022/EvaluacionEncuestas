@@ -41,7 +41,7 @@ namespace EvaluacionServicios.Models.DAL
                     }
                     else { sistemasResult.ActivoMostrar = "Activo"; }
 
-                    sistemasResult.FechaIngreso = rdr["Fecha_Ingreso"].ToString();
+                    sistemasResult.FechaIngreso = Convert.ToDateTime(rdr["Fecha_Ingreso"]);
                     sistemasResult.CedulaUsuario = Convert.ToInt32(rdr["Cedula_Usuario"]);
 
                     lstSistemas.Add(sistemasResult);
