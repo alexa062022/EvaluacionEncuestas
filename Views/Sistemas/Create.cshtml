@@ -1,0 +1,79 @@
+﻿@model EvaluacionServicios.Models.Sistemas
+@{
+    ViewBag.Title = "Agregar Sistema";
+}
+
+<h2 class="mt-5">Agregar Sistema</h2>
+<hr />
+
+@if (TempData["Error"] != null)
+{
+    <br />
+    <div class="alert alert-danger" role="alert">
+        <div class="icono">
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+        </div>
+        @TempData["Error"].ToString()
+    </div>
+}
+
+@using (Html.BeginForm("Create", "Sistemas"))
+{
+    <div class="card my-4">
+        <div class="card-header">
+            <i class="fa-solid fa-gears"></i> Ingrese los siguientes datos:
+        </div>
+        <div class="card-body">
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.NombreSistema, htmlAttributes: new { @class = "control-label col-2" })
+                    <div class="form-group col-10 ">
+                        @Html.TextAreaFor(model => model.NombreSistema, htmlAttributes: new { @class = "form-control  rows = '1'", @maxlength = "100", required = "required" })
+                    </div>
+                </div>
+
+                <div class="form-group row mt-4">
+                    @Html.LabelFor(model => model.InternoExterno, htmlAttributes: new { @class = "control-label col-2" })
+                    <div class="form-group  col-10">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="tipoSistema" value="interno" id="interno" checked="">
+                            <label class="form-check-label" for="interno">Internos</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="externo" name="tipoSistema" id="externo">
+                            <label class="form-check-label" for="externo">Externos</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row mt-4">
+                    @Html.Label("Estado(Activo/Inactivo)", htmlAttributes: new { @class = "control-label col-2" })
+                    <div class="form-check form-switch col-10">
+                        <input class="form-check-input" type="checkbox" name="activo" id="formSwitchCheckChecked" checked="">
+                        <label class="form-check-label" for="formSwitchCheckChecked">Activo</label>
+                    </div>
+                </div>
+                <div class="form-group mt-4">
+                    <div class="col-md-offset-2 col-lg-8 col-sm-12">
+                        @Html.ActionLink(" REGRESAR", "Index", "Sistemas", new object { }, new { @class = "btn boton fa fa-arrow-left col-sm-12 col-lg-3" })
+
+                        <button type="reset" id="btnLimpiar" class="btn boton fa col-sm-12 col-lg-3">
+                            <i class="fas fa-eraser"></i> LIMPIAR
+                        </button>
+
+                        <button type="submit" id="btnguardar" name="btnguardar" class="btn boton fa col-sm-12 col-lg-3">
+                            <i class="fas fa-search"></i>  GUARDAR
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+}
+
+
