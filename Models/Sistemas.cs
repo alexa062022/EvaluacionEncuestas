@@ -11,7 +11,7 @@ namespace EvaluacionServicios.Models
 {
     public class Sistemas    
     {        
-        public string idSistema { get; set; }
+        public int IdSistema { get; set; }
 
         //[Required(ErrorMessage = "Title is required.")]
         [Display(Name = "Nombre del Sistema")]

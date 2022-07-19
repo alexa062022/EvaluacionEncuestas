@@ -1,9 +1,10 @@
-﻿@model EvaluacionServicios.Models.Sistemas
+﻿@model EvaluacionServicios.Models.Formulario
+
 @{
-    ViewBag.Title = "Sistemas";
+    ViewBag.Title = "Formularios";
 }
 
-<h2 class="mt-5">Listado de Sistemas Actuales</h2>
+<h2 class="mt-5">Formularios Actuales</h2>
 <hr class="mb-3" />
 
 @if (TempData["Correcto"] != null)
@@ -27,19 +28,18 @@
         @TempData["Error"].ToString()
     </div>
 }
-
-@(Html.Kendo().Grid(Model.lstSistemas)
+@(Html.Kendo().Grid(Model.lstFormulario)
           .Name("grdSistemas")
 
           .Columns(columns =>
           {
               columns.Bound(p => p.NombreSistema).Width(100).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
-              columns.Bound(p => p.InternoExternoMostrar).Width(80).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              columns.Bound(p => p.Descripcion).Width(80).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
               columns.Bound(p => p.ActivoMostrar).Width(80).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
               columns.Bound(p => p.FechaIngreso).Format("{0:dd/MM/yyyy}").Width(80).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
               //columns.Bound(p => p.CedulaUsuario).Width(80).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
-
-              columns.Bound(p => p.IdSistema).HeaderHtmlAttributes(new { @class = "encabezadoTabla" }).ClientTemplate("<a href='" + Url.Action("Edit", "Sistemas", new { NombreSistema = "#= NombreSistema #", InternoExternoMostrar = "#= InternoExternoMostrar #", ActivoMostrar = "#= ActivoMostrar #", IdSistema = "#= IdSistema #" }) + "' target=_self >Editar</a>").Title("Acciones").Filterable(false).Width(50);
+              @Html.HiddenFor(model => Model.IdSistema);
+              columns.Bound(p => p.IdFormulario).HeaderHtmlAttributes(new { @class = "encabezadoTabla" }).ClientTemplate("<a href='" + Url.Action("Edit", "Formulario", new { form = "#= IdFormulario #", sistema = "#= IdSistema #", Descripcion = "#= Descripcion #", ActivoMostrar = "#= ActivoMostrar #" }) + "' target=_self >Editar</a>").Title("Acciones").Filterable(false).Width(50);
 
 
           })
@@ -50,7 +50,7 @@
               .Numeric(false)
           )
               .Excel(excel => excel
-              .FileName("ListadoDeSistemas.xlsx")
+              .FileName("ListadoDeFormularios.xlsx")
               .Filterable(true)
               .AllPages(true)
               .ProxyURL(Url.Action("Exportar_Result_Excel"))
@@ -69,7 +69,7 @@
     <div class="col-md-offset-2 col-lg-8 col-sm-12">
         @Html.ActionLink(" REGRESAR", "Index", "Escritorio", new object { }, new { @class = "btn boton fa fa-arrow-left col-sm-12 col-lg-3" })
 
-        @Html.ActionLink(" AGREGAR", "Create", "Sistemas", new object { }, new { @class = "btn boton fas fa-plus col-sm-12 col-lg-3" })
+        @Html.ActionLink(" AGREGAR", "Create", "Formulario", new object { }, new { @class = "btn boton fas fa-plus col-sm-12 col-lg-3" })
         <i class=""></i>
     </div>
 </div>

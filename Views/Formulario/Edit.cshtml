@@ -1,54 +1,70 @@
-﻿@model EvaluacionServicios.Models.Sistemas
+﻿@model EvaluacionServicios.Models.Formulario
 @{
-    ViewBag.Title = "Editar Sistema";
+    ViewBag.Title = "Modificar Formulario";
 }
 
-<h2 class="mt-5">Editar Sistema</h2>
+<h2 class="mt-5">Modificar Formulario</h2>
 <hr class="mb-3" />
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmSistemas" }))
+@if (TempData["Error"] != null)
+{
+    <br />
+    <div class="alert alert-danger" role="alert">
+        <div class="icono">
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+        </div>
+        @TempData["Error"].ToString()
+    </div>
+}
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmFormulario" }))
 {
     <div class="card my-4">
         <div class="card-header">
             <i class="fa-solid fa-gears"></i> Ingrese los siguientes datos:
         </div>
         <div class="card-body">
-            <div class="form-horizontal">
+            <div class="form-horizontal form-label-font-weight">
 
                 <div class="form-group row">
+                    @Html.Label("Nombre del Sistema", htmlAttributes: new { @class = "control-label col-2 fw-bold" })
                     @Html.HiddenFor(model => model.IdSistema)
-                    @Html.LabelFor(model => model.NombreSistema, htmlAttributes: new { @class = "control-label col-2 fw-bold" })
+                    <div class="col-6">
+                        @(Html.Kendo().ComboBox()
+                       .Name("Sistema")
+                       .DataTextField("NombreSistema")
+                       .DataValueField("IdSistema")
+                       .Filter("Contains")
+                       .Placeholder("Seleccione el sistema")
+                       .BindTo(@ViewBag.ListaSistemas)
+                       .SelectedIndex(-1)
+                       .Suggest(false)
+                       .IgnoreCase(true)
+                       .HtmlAttributes(new { style = "width:100%;text-transform:uppercase;", @class = "", disabled = "true" }))
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-2 fw-bold" })
                     <div class="form-group col-10 ">
-                        @Html.TextBoxFor(model => model.NombreSistema, htmlAttributes: new { @class = "form-control  rows = '1'", @maxlength = "100", required = "required" })
+                        @Html.TextAreaFor(model => model.Descripcion, htmlAttributes: new { @class = "form-control  rows = '1'", @maxlength = "1000", required = "required" })
                     </div>
                 </div>
-
-                <div class="form-group row mt-4">
-                    @Html.LabelFor(model => model.InternoExterno, htmlAttributes: new { @class = "control-label col-2 fw-bold" })
-                    @Html.HiddenFor(model => model.InternoExterno)
-                    <div class="form-group  col-10">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="tipoSistema" value="interno" id="interno">
-                            <label class="form-check-label fw-bold" for="interno">Interno</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="tipoSistema" value="externo" id="externo">
-                            <label class="form-check-label fw-bold" for="externo">Externo</label>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="form-group row mt-4">
                     @Html.Label("Estado", htmlAttributes: new { @class = "control-label col-2 fw-bold" })
                     @Html.HiddenFor(model => model.Activo)
-                    <div class="form-check form-switch col-10">
+                    <div class="form-check form-switch col-8 m-lg-2">
                         <input class="form-check-input" type="checkbox" name="activo" id="activo" checked="">
                         <label class="form-check-label fw-bold" for="activo">Activo</label>
                     </div>
                 </div>
+                @Html.HiddenFor(model => model.IdFormulario)
+
                 <div class="form-group mt-4">
                     <div class="col-md-offset-2 col-lg-8 col-sm-12">
-                        @Html.ActionLink(" REGRESAR", "Index", "Sistemas", new object { }, new { @class = "btn boton fa fa-arrow-left col-sm-12 col-lg-3" })
+                        @Html.ActionLink(" REGRESAR", "Index", "Formulario", new object { }, new { @class = "btn boton fa fa-arrow-left col-sm-12 col-lg-3" })
+
+                        <button type="reset" id="btnLimpiar" class="btn boton fa col-sm-12 col-lg-3">
+                            <i class="fas fa-eraser"></i> LIMPIAR
+                        </button>
 
                         <button type="button" id="btnguardar" name="btnguardar" class="btn boton fa col-sm-12 col-lg-3">
                             <i class="fas fa-save"></i>  GUARDAR
@@ -62,60 +78,53 @@
         </div>
     </div>
 }
-<script type="text/javascript">
+<script>
 
     $(document).ready(function () {
+        var sistema2 = $("#Sistema").data("kendoComboBox");
         const valores = window.location.search;
 
         //Creamos la instancia
         const urlParams = new URLSearchParams(valores);
 
         //Accedemos a los valores
-        var tipoSistema = urlParams.get('InternoExternoMostrar');
+        var formularioId = urlParams.get('form');
+        var sistemaId = urlParams.get('sistema');
+        var descripcion = urlParams.get('Descripcion');
         var estadoSistema = urlParams.get('ActivoMostrar');
-        var nombreSistema = urlParams.get('NombreSistema');
-        var idSistema = urlParams.get('IdSistema');
-        //asignamos los valores
-        $("#NombreSistema").val(nombreSistema);
-        $("#IdSistema").val(idSistema);
-
-        if (tipoSistema == 'Externo') {
-            $("#externo").prop('checked', true);
-            $("#interno").prop('checked', false);
-        } else {
-            $("#interno").prop('checked', true);
-            $("#externo").prop('checked', false);
-        }
+        //carga datos en el formulario del formulario a editar
         if (estadoSistema == 'Activo') {
             $("#activo").prop('checked', true);
         } else {
             $("#activo").prop('checked', false);
         }
-
+        $("#Descripcion").text(descripcion);
+        sistema2.value(sistemaId);
+        $("#IdFormulario").val(formularioId);
     });
+
     $("#btnguardar").click(function () {
+        var sistema = $("#Sistema").data("kendoComboBox");
         //verifica que los campos esten llenos para continuar, de lo contrario envia mensaje en pantalla
         var mensaje = "Por favor complete los siguientes espacios:";
-
-        if ($("#NombreSistema").val() == "") {
+        if (sistema.value() == "") {
             mensaje = mensaje + "<br>Nombre del sistema";
+        }
+        if ($("#Descripcion").val() == "") {
+            mensaje = mensaje + "<br>Descripción";
         }
         if (mensaje != "Por favor complete los siguientes espacios:") {
             $("#mensajeAlerta").empty();
             $("#mensajeAlerta").html(mensaje);
             $('#mensajeValidacion').modal('show');
         } else {
-            if ($("#externo").prop('checked')) {
-                $("#InternoExterno").val(0);
-            } else {
-                $("#InternoExterno").val(1);
-            }
+            $("#IdSistema").val(sistema.value());
             if ($("#activo").prop('checked')) {
                 $("#Activo").val(1);
             } else {
                 $("#Activo").val(0);
             }
-            $("#frmSistemas").submit();
+            $("#frmFormulario").submit();
         }
 
     });
@@ -125,7 +134,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Evaluacion de Servicios | Sistemas</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Evaluacion de Servicios | Formularios</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body row">

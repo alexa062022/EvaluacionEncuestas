@@ -25,7 +25,7 @@ namespace EvaluacionServicios.Models.DAL
                 while (rdr.Read())
                 {
                     Sistemas sistemasResult = new Sistemas();
-                    sistemasResult.idSistema = rdr["Id_Sistema"].ToString();
+                    sistemasResult.IdSistema = Convert.ToInt32(rdr["Id_Sistema"]);
                     sistemasResult.NombreSistema = rdr["Nombre_Sistema"].ToString();                                       
                     sistemasResult.InternoExterno = Convert.ToInt32(rdr["Interno_Externo"]);
 
@@ -80,7 +80,7 @@ namespace EvaluacionServicios.Models.DAL
             {
                 SqlCommand cmd = new SqlCommand("usp_Sistemas_Update", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id_Sistema", Convert.ToInt32(sistemas.idSistema));
+                cmd.Parameters.AddWithValue("@Id_Sistema", sistemas.IdSistema);
                 cmd.Parameters.AddWithValue("@Nombre_Sistema", sistemas.NombreSistema);
                 cmd.Parameters.AddWithValue("@Interno_Externo", sistemas.InternoExterno);                
                 cmd.Parameters.AddWithValue("@Activo", sistemas.Activo);
