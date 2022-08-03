@@ -1,0 +1,66 @@
+﻿@model EvaluacionServicios.Models.Preguntas
+@{
+    ViewBag.Title = "Preguntas2";
+}
+
+<h2 class="mt-5">Preguntas para Formularios</h2>
+<hr class="mb-3" />
+<div class="card my-4">
+    <div class="card-header">
+        <i class="fa-solid fa-gears"></i> PREGUNTAS ACTUALES
+    </div>
+    <div class="card-body">
+        <div> @Html.Partial("_listaPreguntas", Model) </div>        
+    </div>
+</div>
+<div class="form-group mt-4">
+    <div class="col-md-offset-2 col-lg-8 col-sm-12">
+        @Html.ActionLink(" REGRESAR", "Index", "Escritorio", new object { }, new { @class = "btn boton fa fa-arrow-left col-sm-12 col-lg-3" })
+        <button type="button" id="btnAgregar" name="btnAgregar" class="btn boton fa col-sm-12 col-lg-3 collapsed" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
+            <i class="fas fa-save"></i>  AGREGAR
+        </button>
+    </div>
+</div>
+@using (Html.BeginForm("Create", "Preguntas"))
+{
+    <div class="collapse" id="collapseForm" style="">
+        <div class="card my-4">
+            <div class="card-header">
+                <i class="fa-solid fa-gears"></i> NUEVA PREGUNTA
+            </div>
+            <div class="card-body">
+                @*<div class="form-horizontal">*@
+
+                <div class="form-group row">
+                    @Html.Label("Digite la pregunta:", htmlAttributes: new { @class = "control-label col-2 fw-bold" })
+                    <div class="form-group col-10 ">
+                        @Html.TextArea("pregunta", htmlAttributes: new { @class = "form-control  rows = '1'", @maxlength = "1000", required = "required" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4">
+                    <div class="col-md-offset-2 col-lg-8 col-sm-12">
+                        <button type="reset" id="btnLimpiar" class="btn boton fa col-sm-12 col-lg-3">
+                            <i class="fas fa-eraser"></i> LIMPIAR
+                        </button>
+                        <button type="submit" id="btnguardar" name="btnguardar" class="btn boton fa col-sm-12 col-lg-3">
+                            <i class="fas fa-save"></i>  GUARDAR
+                        </button>
+
+                    </div>
+                </div>
+                @*</div>*@
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    
+    
+       
+        $('#collapseForm').on('shown.bs.collapse', function () {
+            $("#pregunta").focus();
+        })
+   
+</script>

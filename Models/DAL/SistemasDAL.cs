@@ -12,13 +12,14 @@ namespace EvaluacionServicios.Models.DAL
     {
         readonly string connectionString = ConfigurationManager.ConnectionStrings["Cnx"].ToString();
 
-        public IEnumerable<Sistemas> ObtenerSistemas()
+        public IEnumerable<Sistemas> ObtenerSistemas(string estado)
         {
             List<Sistemas> lstSistemas = new List<Sistemas>();
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("usp_Sistemas_Select", con);
-                cmd.CommandType = CommandType.StoredProcedure;                
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@estado", estado); // A= activo, I= inactivo, T= todos
                 con.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
 

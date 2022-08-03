@@ -32,28 +32,34 @@
 
                 <div class="navbar-collapse collapse d-flex justify-content-between">
                     <ul class="nav navbar-nav mr-auto">
-                        <li class="nav-item ItemMenuPadre">
-                            @Html.ActionLink("Ir a...", "Index", "Escritorio", null, new { @class = "nav-link" })
-                            <ul>
+                        <li class="nav-item">@Html.ActionLink("Sistemas", "Index", "Sistemas", null, new { @class = "nav-link" })</li>
 
-                                @*<li>@Html.ActionLink("Catalogos", "Index", "Catalogos", null, new { @class = "nav-link" })</li>
-                                <li class="nav-item">@Html.ActionLink("Firmador", "Index", "Documentos_Firmas", null, new { @class = "nav-link" })</li>*@
-                            </ul>
-                        </li>
+                        <li class="nav-item">@Html.ActionLink("Formularios", "Index", "Formulario", null, new { @class = "nav-link" })</li>
 
-                        <li class="nav-item">@Html.ActionLink("Tutoriales", "Index", "Tutoriales", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Preguntas", "Index", "Preguntas", null, new { @class = "nav-link" })</li>
 
+                        @*<li class="nav-item ItemMenuPadre">
+            @Html.ActionLink("Ir a...", "Index", "Escritorio", null, new { @class = "nav-link" })
+            <ul>
+
+                <li>@Html.ActionLink("Catalogos", "Index", "Catalogos", null, new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Firmador", "Index", "Documentos_Firmas", null, new { @class = "nav-link" })</li>
+            </ul>
+        </li>
+
+        <li class="nav-item">@Html.ActionLink("Tutoriales", "Index", "Tutoriales", null, new { @class = "nav-link" })</li>
+                        *@
                     </ul>
 
-                    @*@if (Helper.SessionHelper.ExistUserInSession())
-                    {
-                        <div class="d-flex  flex-row-reverse">
-                            <div class="text-center well">
-                                Bienvenido(a), <b>@PGREvaluacion.Models.Common.FrontUser.Get().Nombre</b> [<a href="~/Escritorio/salir">Finalizar sesión</a>]
-                            </div>
-                        </div>
-                    }*@
+                        @*@if (Helper.SessionHelper.ExistUserInSession())
+        {
+            <div class="d-flex  flex-row-reverse">
+                <div class="text-center well">
+                    Bienvenido(a), <b>@PGREvaluacion.Models.Common.FrontUser.Get().Nombre</b> [<a href="~/Escritorio/salir">Finalizar sesión</a>]
                 </div>
+            </div>
+        }*@
+</div>
 
                 <ul class="nav nav-pills">
                 </ul>

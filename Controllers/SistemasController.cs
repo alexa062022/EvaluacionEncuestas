@@ -20,7 +20,7 @@ namespace EvaluacionServicios.Controllers
         public ActionResult Index()
         {
             Sistemas sistemasResult = new Sistemas();
-            List<Sistemas> lstSistemasResultados = new List<Sistemas>(objsistemas.ObtenerSistemas());
+            List<Sistemas> lstSistemasResultados = new List<Sistemas>(objsistemas.ObtenerSistemas("T"));
             sistemasResult.lstSistemas = lstSistemasResultados;
             return View(sistemasResult);           
         }
@@ -35,10 +35,11 @@ namespace EvaluacionServicios.Controllers
         {
             int resultadoInsert;
             sistema.CedulaUsuario = cedulaUsuario;
+            sistema.Activo = 1; // por default el sistema nuevo va a estar activo.
             resultadoInsert = objsistemas.IgresarSistema(sistema);
             if(resultadoInsert == -1)
             {
-                TempData["error"] = "No se pudo ingresar el sistema, por favor verifique que el sistema no exista actualmente";
+                TempData["error"] = "Error: Existe un sistema con ese nombre actualmente";
                 return View();
             }
             else
@@ -64,7 +65,7 @@ namespace EvaluacionServicios.Controllers
             resultadoInsert = objsistemas.ModificarSistema(sistema);
             if (resultadoInsert == -1)
             {
-                TempData["error"] = "No se actualizaron los datos, por favor intente nuevamente";                
+                TempData["error"] = "Error: Existe un sistema con ese nombre actualmente";                
             }
             else
             {

@@ -1,0 +1,47 @@
+﻿@model EvaluacionServicios.Models.Preguntas
+
+
+@(Html.Kendo().Grid(Model.lstPreguntas)
+          .Name("grdPreguntas")
+
+          .Columns(columns =>
+          {
+              columns.Bound(p => p.DescPregunta).Width(200).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              columns.Bound(p => p.TipoPregunta).Width(70).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              columns.Bound(p => p.ActivoMostrar).Width(40).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              columns.Bound(p => p.IdPregunta).Hidden();
+              //columns.Bound(p => p.IdPregunta).HeaderHtmlAttributes(new { @class = "encabezadoTabla" }).ClientTemplate("<a href='" + Url.Action("Edit", "Preguntas", new { Pregunta = "#= DescPregunta #" }) + "' target=_self >Editar</a>").Title("Acciones").Filterable(false).Width(70);
+              columns.Command(command => { command.Custom("Editar").Click("mostrarEditor"); }).Width(25).Title("Acciones");
+
+          })
+          .ToolBar(tools => tools.Excel().Text("Exportar a Excel"))
+              .HtmlAttributes(new { style = "height:450px; font-size: 16px;" })
+              .Pageable(pageable => pageable
+              .Input(true)
+              .Numeric(false)
+          )
+              .Excel(excel => excel
+              .FileName("ListadoDePreguntas.xlsx")
+              .Filterable(true)
+              .AllPages(true)
+              .ProxyURL(Url.Action("Exportar_Result_Excel"))
+          )
+             .Sortable()
+             .Scrollable(scr => scr.Height(400))
+             .Filterable()
+             .DataSource(dataSource => dataSource
+             .Ajax()
+             .PageSize(20)
+             .ServerOperation(false)
+            )
+)
+<script type="text/javascript">
+    function mostrarEditor(e) {
+            var grid = this;
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            $("#frmPreguntas").css("display", "none");
+            $("#frmPreguntasEditar").css("display", "block");
+            $("#preguntaEditar").val(dataItem.DescPregunta);
+            $("#idPregunta").val(dataItem.IdPregunta);
+        }
+    </script>

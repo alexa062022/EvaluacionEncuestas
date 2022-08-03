@@ -43,17 +43,18 @@ namespace EvaluacionServicios.Controllers
             try
             {                          
                 formulario.CedulaUsuario = cedulaUsuario;
-                
+                formulario.Activo = 1; // se asigna el valor 1 correspondiente activo a todos los formularios nuevos
+
                 resultadoInsert = objFormulario.IgresarFormulario(formulario);
                 if (resultadoInsert == -1)
                 {
-                    TempData["error"] = "No se puede ingresar el formulario, ya que existe un formulario para el sistema seleccionado";
+                    TempData["error"] = "Error: Existe un formulario activo para el sistema seleccionado";
                     ListaCombobox();
                     return View();
                 }
                 else
                 {
-                    TempData["Correcto"] = "Se agregó el registro de manera correcta";
+                    TempData["Correcto"] = "Se agregó el formulario de manera correcta";
                     return RedirectToAction("Index");
                 }                
             }
@@ -66,7 +67,7 @@ namespace EvaluacionServicios.Controllers
         }
         public void ListaCombobox()
         {
-            IEnumerable<Sistemas> lstSistemasResultados = objsistemas.ObtenerSistemas();
+            IEnumerable<Sistemas> lstSistemasResultados = objsistemas.ObtenerSistemas("A");
             ViewBag.ListaSistemas = lstSistemasResultados;
         }
         // GET: Formulario/Edit/
@@ -88,7 +89,7 @@ namespace EvaluacionServicios.Controllers
                 resultadoInsert = objFormulario.ModificarFormulario(formulario);
                 if (resultadoInsert == -1)
                 {
-                    TempData["error"] = "Error de base de datos, no se modificó el formulario.";                    
+                    TempData["error"] = "Error: Existe un formulario activo para el sistema seleccionado";                    
                 }
                 else
                 {

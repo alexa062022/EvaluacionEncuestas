@@ -6,33 +6,29 @@ using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace EvaluacionServicios.Models
 {
-    public class Formulario
+    public class TipoPregunta
     {
-        public int IdFormulario { get; set; }
+        public int IdTipoPregunta { get; set; }
 
-        public int IdSistema { get; set; }
-        
+        //[Required(ErrorMessage = "Title is required.")]
         [Display(Name = "Nombre del Sistema")]
-        public string NombreSistema { get; set; }
-
-        [Display(Name = "Descripción del Formulario")] 
-        public string Descripcion { get; set; }
+        public string DescTipoPregunta { get; set; }        
 
         [Display(Name = "Estado")]
         public int Activo { get; set; } //1 = Activo, 0 = Inactivo
-
-        [Display(Name = "Estado")]
-        public string ActivoMostrar { get; set; } //1 = Activo, 0 = Inactivo
 
         [Display(Name = "Fecha Ingreso")]
         public DateTime FechaIngreso { get; set; }
 
         [Display(Name = "Usuario")]
         public int CedulaUsuario { get; set; }
-                
-        public virtual ICollection<Formulario> lstFormulario { get; set; }
+        
+        //muestra el estado del sistema en un string para ser presentado en pantalla
+        [Display(Name = "Estado")]
+        public string ActivoMostrar { get; set; }
+
+        public virtual ICollection<TipoPregunta> lstTipoPregunta { get; set; }
     }
 }
