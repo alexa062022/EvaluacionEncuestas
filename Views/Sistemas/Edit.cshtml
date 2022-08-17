@@ -39,6 +39,7 @@
                 </div>
 
                 <div class="form-group row mt-4">
+                    @Html.Hidden("estadoModificado")
                     @Html.Label("Estado", htmlAttributes: new { @class = "control-label col-2 fw-bold" })
                     @Html.HiddenFor(model => model.Activo)
                     <div class="form-check form-switch col-10">
@@ -92,10 +93,9 @@
             $("#activo").prop('checked', false);
         }
 
-    });
-    $("#btnguardar").click(function () {
+   $("#btnguardar").click(function () {
         //verifica que los campos esten llenos para continuar, de lo contrario envia mensaje en pantalla
-        var mensaje = "Por favor complete los siguientes espacios:";
+        var mensaje = "Por favor complete los siguientes espacios:";        
 
         if ($("#NombreSistema").val() == "") {
             mensaje = mensaje + "<br>Nombre del sistema";
@@ -115,10 +115,17 @@
             } else {
                 $("#Activo").val(0);
             }
+            //verifica si se esta desactivando el sistema
+            if ($("#Activo").val() == 0 && estadoSistema == "Activo") { 
+                $("#estadoModificado").val(1);                
+            } else {
+                $("#estadoModificado").val(0);
+            }
             $("#frmSistemas").submit();
         }
 
-    });
+   });
+});
 </script>
 <!-- Modal -->
 <div class="modal fade" id="mensajeValidacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -39,7 +39,7 @@
               columns.Bound(p => p.FechaIngreso).Format("{0:dd/MM/yyyy}").Width(80).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
               //columns.Bound(p => p.CedulaUsuario).Width(80).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
               @Html.HiddenFor(model => Model.IdSistema);
-              columns.Bound(p => p.IdFormulario).HeaderHtmlAttributes(new { @class = "encabezadoTabla" }).ClientTemplate("<a href='" + Url.Action("Edit", "Formulario", new { form = "#= IdFormulario #", sistema = "#= IdSistema #", Descripcion = "#= Descripcion #", ActivoMostrar = "#= ActivoMostrar #" }) + "' target=_self >Editar</a>").Title("Acciones").Filterable(false).Width(50);
+              columns.Bound(p => p.IdFormulario).HeaderHtmlAttributes(new { @class = "encabezadoTabla" }).ClientTemplate("<a href='" + Url.Action("Edit", "Formulario", new { form = "#= IdFormulario #", sistema = "#= IdSistema #", N = "#= NombreSistema #", Descripcion = "#= Descripcion #", ActivoMostrar = "#= ActivoMostrar #" }) + "' target=_self >Editar</a>").Title("Acciones").Filterable(false).Width(50);
 
 
           })

@@ -46,8 +46,7 @@ namespace EvaluacionServicios.Controllers
             {
                 TempData["Correcto"] = "Se agregó el sistema de manera correcta";
                 return RedirectToAction("Index");
-            }
-           
+            }           
         }
 
         // GET: Sistemas/Edit
@@ -58,19 +57,29 @@ namespace EvaluacionServicios.Controllers
 
         //// POST: Sistemas/Edit5
         [HttpPost]
-        public ActionResult Edit(Sistemas sistema)
+        public ActionResult Edit(Sistemas sistema, int estadoModificado)
         {
             int resultadoInsert;
             sistema.CedulaUsuario = cedulaUsuario;
-            resultadoInsert = objsistemas.ModificarSistema(sistema);
-            if (resultadoInsert == -1)
+            resultadoInsert = objsistemas.ModificarSistema(sistema, estadoModificado);
+            switch (resultadoInsert)
             {
-                TempData["error"] = "Error: Existe un sistema con ese nombre actualmente";                
-            }
-            else
-            {
-                TempData["Correcto"] = "Se modificó el sistema de manera correcta";                
-            }
+                case 1:
+                    TempData["error"] = "Error: Existe un sistema con ese nombre actualmente";
+                    break;
+
+                case 2:
+                    TempData["error"] = "Error: Existe un formulario activo asociado a este sistema, debe desactivarlo antes de proceder a desactivar el sistema";
+                    break;
+
+                case 3:
+                    TempData["error"] = "Error: Error en base de datos";
+                    break;
+
+                default:
+                    TempData["Correcto"] = "Se modificó el sistema de manera correcta";
+                    break;
+            }            
             return RedirectToAction("Index");
         }         
     }

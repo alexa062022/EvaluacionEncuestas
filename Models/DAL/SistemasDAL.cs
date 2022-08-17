@@ -74,7 +74,7 @@ namespace EvaluacionServicios.Models.DAL
             return resultado;
         }
 
-        public int ModificarSistema(Sistemas sistemas)
+        public int ModificarSistema(Sistemas sistemas, int desactivar)
         {
             int resultado = 0;
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -86,6 +86,7 @@ namespace EvaluacionServicios.Models.DAL
                 cmd.Parameters.AddWithValue("@Interno_Externo", sistemas.InternoExterno);                
                 cmd.Parameters.AddWithValue("@Activo", sistemas.Activo);
                 cmd.Parameters.AddWithValue("@Cedula_Usuario", sistemas.CedulaUsuario);
+                cmd.Parameters.AddWithValue("@Desactivar", desactivar);
                 con.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
 

@@ -28,19 +28,9 @@
                 <div class="form-group row">
                     @Html.Label("Nombre del Sistema", htmlAttributes: new { @class = "control-label col-2 fw-bold" })
                     @Html.HiddenFor(model => model.IdSistema)
-                    <div class="col-6">
-                        @(Html.Kendo().ComboBox()
-                       .Name("Sistema")
-                       .DataTextField("NombreSistema")
-                       .DataValueField("IdSistema")
-                       .Filter("Contains")
-                       .Placeholder("Seleccione el sistema")
-                       .BindTo(@ViewBag.ListaSistemas)
-                       .SelectedIndex(-1)
-                       .Suggest(false)
-                       .IgnoreCase(true)
-                       .HtmlAttributes(new { style = "width:100%;text-transform:uppercase;", @class = "", disabled = "true" }))
-                    </div>
+                   <div class="form-group col-10 ">
+                        @Html.TextBoxFor(model => model.NombreSistema, htmlAttributes: new { @class = "form-control  rows = '1'", @maxlength = "500", disabled = "true" })
+                    </div>                   
                 </div>
                 <div class="form-group row">
                     @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-2 fw-bold" })
@@ -80,8 +70,7 @@
 }
 <script>
 
-    $(document).ready(function () {
-        var sistema2 = $("#Sistema").data("kendoComboBox");
+    $(document).ready(function () {      
         const valores = window.location.search;
 
         //Creamos la instancia
@@ -90,6 +79,7 @@
         //Accedemos a los valores
         var formularioId = urlParams.get('form');
         var sistemaId = urlParams.get('sistema');
+        var sistema = urlParams.get('N');
         var descripcion = urlParams.get('Descripcion');
         var estadoSistema = urlParams.get('ActivoMostrar');
         //carga datos en el formulario del formulario a editar
@@ -98,18 +88,15 @@
         } else {
             $("#activo").prop('checked', false);
         }
-        $("#Descripcion").text(descripcion);
-        sistema2.value(sistemaId);
+        $("#IdSistema").val(sistemaId);
+        $("#NombreSistema").val(sistema);
+        $("#Descripcion").text(descripcion);       
         $("#IdFormulario").val(formularioId);
     });
 
-    $("#btnguardar").click(function () {
-        var sistema = $("#Sistema").data("kendoComboBox");
+    $("#btnguardar").click(function () {       
         //verifica que los campos esten llenos para continuar, de lo contrario envia mensaje en pantalla
-        var mensaje = "Por favor complete los siguientes espacios:";
-        if (sistema.value() == "") {
-            mensaje = mensaje + "<br>Nombre del sistema";
-        }
+        var mensaje = "Por favor complete los siguientes espacios:";       
         if ($("#Descripcion").val() == "") {
             mensaje = mensaje + "<br>Descripción";
         }
@@ -117,8 +104,7 @@
             $("#mensajeAlerta").empty();
             $("#mensajeAlerta").html(mensaje);
             $('#mensajeValidacion').modal('show');
-        } else {
-            $("#IdSistema").val(sistema.value());
+        } else {          
             if ($("#activo").prop('checked')) {
                 $("#Activo").val(1);
             } else {
@@ -126,7 +112,6 @@
             }
             $("#frmFormulario").submit();
         }
-
     });
 </script>
 <!-- Modal -->

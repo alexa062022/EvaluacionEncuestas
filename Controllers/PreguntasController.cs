@@ -21,13 +21,7 @@ namespace EvaluacionServicios.Controllers
             tipoPregCombobox();
             return View(ObtenerListaPreguntas());
         }
-        // GET: Preguntas/Create
-        //public ActionResult Create()
-        //{
-        //    tipoPregCombobox();
-        //    return View(ObtenerListaPreguntas());
-        //}
-
+       
         // POST: Preguntas/Create
         [HttpPost]
         public ActionResult Create(string pregunta, int IdTipoPregunta)
@@ -36,15 +30,20 @@ namespace EvaluacionServicios.Controllers
             {
                 int resultadoInsert;
                 resultadoInsert = objPreguntas.IgresarPregunta(pregunta, IdTipoPregunta);
+                switch (resultadoInsert)
+                {
+                    case -1:
+                        TempData["error"] = "Error: Ya existe esa pregunta en la base de datos.";
+                        break;
 
-                if (resultadoInsert == -1)
-                {
-                    TempData["error"] = "Error: No se agregó la pregunta. Por favor vuelva a intentar";                   
-                }
-                else
-                {
-                    TempData["Correcto"] = "Se agregó la pregunta de manera correcta";                   
-                }
+                    case -2:
+                        TempData["error"] = "Error de Base de datos";
+                        break;                   
+
+                    default:
+                        TempData["Correcto"] = "Se agregó la pregunta de manera correcta";
+                        break;
+                }               
             }
             catch
             {
@@ -63,7 +62,7 @@ namespace EvaluacionServicios.Controllers
 
                 if (resultadoUpdate == -1)
                 {
-                    TempData["error"] = "Error: No se modificó la pregunta. Por favor vuelva a intentar";
+                    TempData["error"] = "Error: Ya existe esa pregunta en la base de datos.";
                 }
                 else
                 {

@@ -1,9 +1,15 @@
 ﻿@model EvaluacionServicios.Models.Preguntas
-
+<style>
+    .k-grid .k-grid-search {
+        display: flex;
+        margin-left: auto;
+        margin-right: 0;
+    }
+</style>
 
 @(Html.Kendo().Grid(Model.lstPreguntas)
           .Name("grdPreguntas")
-
+          .ToolBar(t => t.Search().Text("Buscar.."))
           .Columns(columns =>
           {
               columns.Bound(p => p.DescPregunta).Width(200).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });

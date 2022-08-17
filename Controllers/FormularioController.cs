@@ -71,9 +71,8 @@ namespace EvaluacionServicios.Controllers
             ViewBag.ListaSistemas = lstSistemasResultados;
         }
         // GET: Formulario/Edit/
-        public ActionResult Edit()
-        {
-            ListaCombobox();
+        public ActionResult Edit( )
+        {            
             return View();
         }
 
@@ -87,14 +86,24 @@ namespace EvaluacionServicios.Controllers
                 formulario.CedulaUsuario = cedulaUsuario;
 
                 resultadoInsert = objFormulario.ModificarFormulario(formulario);
-                if (resultadoInsert == -1)
+                switch (resultadoInsert)
                 {
-                    TempData["error"] = "Error: Existe un formulario activo para el sistema seleccionado";                    
-                }
-                else
-                {
-                    TempData["Correcto"] = "Se modificó el formulario de manera correcta";                
-                }
+                    case 1:
+                        TempData["error"] = "Error: Existe un formulario activo para el sistema seleccionado";
+                        break;
+
+                    case 2:
+                        TempData["error"] = "Error: El sistema asociado al formulario esta desactivado";
+                        break;
+
+                    case 3:
+                        TempData["error"] = "Error: Error en base de datos";
+                        break;
+
+                    default:
+                        TempData["Correcto"] = "Se modificó el sistema de manera correcta";
+                        break;
+                }               
             }
             catch
             {
