@@ -11,7 +11,7 @@ namespace EvaluacionServicios.Models.DAL
     public class PreguntasDAL
     {
         readonly string connectionString = ConfigurationManager.ConnectionStrings["Cnx"].ToString();
-        public IEnumerable<Preguntas> ObtenerPreguntas()
+        public IEnumerable<Preguntas> ObtenerPreguntas(string activo)
         {
             List<Preguntas> lstPreguntas = new List<Preguntas>();
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -19,6 +19,7 @@ namespace EvaluacionServicios.Models.DAL
                 SqlCommand cmd = new SqlCommand("usp_Preguntas_Select", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id_Pregunta", -1);
+                cmd.Parameters.AddWithValue("@estado", activo);
                 con.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
 

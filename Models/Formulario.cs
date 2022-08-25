@@ -32,7 +32,9 @@ namespace EvaluacionServicios.Models
 
         [Display(Name = "Usuario")]
         public int CedulaUsuario { get; set; }
-                
+
+       public string Color { get; set; }
+
         public virtual ICollection<Formulario> lstFormulario { get; set; }
     }
 }

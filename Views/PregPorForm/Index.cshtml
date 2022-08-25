@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "Crear Encuesta";
+}
+
+<h2 class="mt-5">Crear Encuesta</h2>
+<hr class="mb-3" />
+@if (TempData["Correcto"] != null)
+{
+    <br />
+    <div class="alert alert-success" role="alert">
+        <div class="icono">
+            <i class="fas fa-check-circle fa-2x"></i>
+        </div>
+        @TempData["Correcto"].ToString()
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <br />
+    <div class="alert alert-danger" role="alert">
+        <div class="icono">
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+        </div>
+        @TempData["Error"].ToString()
+    </div>
+}
+@using (Html.BeginForm("Create", "PregPorForm", FormMethod.Post, new { id = "frmEncuesta" }))
+{
+    <div class="card my-4">
+        <div class="card-header">
+            <i class="fa-solid fa-gears"></i> Datos requeridos para la creación de una encuesta:
+        </div>
+        <div class="card-body my-4 px-5">
+            <div class="form-horizontal form-label-font-weight">
+
+                <div class="form-group row">
+                    @Html.Label("Sistema al cual se aplicará la encuesta", htmlAttributes: new { @class = "control-label  fw-bold pb-2" })
+                    <div>
+                        @(Html.Kendo().ComboBox()
+                           .Name("Formulario")
+                           .DataTextField("NombreSistema")
+                           .DataValueField("IdFormulario")
+                           .Filter("Contains")
+                           .Placeholder("Seleccione el sistema")
+                           .BindTo(@ViewBag.ListaFormulario)
+                           .SelectedIndex(-1)
+                           .Suggest(false)
+                           .IgnoreCase(true)
+                           .HtmlAttributes(new { style = "width:100%;text-transform:uppercase;", @class = "", required = "required" })
+                         )
+                    </div>
+                </div>
+                @*<div class="form-group row">
+                        @Html.Label("Descripción", htmlAttributes: new { @class = "control-label fw-bold pb-2" })
+                        <div class="form-group ">
+                            @Html.TextArea("descripcion", htmlAttributes: new { @class = "form-control  rows = '1'", @maxlength = "5000", disabled = "true" })
+                        </div>
+                    </div>*@
+                <div class="k-d-flex k-justify-content-left" style="padding-top: 0px; padding-bottom: 180px;">
+                    <div class="k-w-300">
+                        <label for="required" style="padding-bottom: 5px; font-weight: bold;">Seleccione las preguntas, en el orden que desea que aparezcan en la encuesta</label>
+                        @(Html.Kendo().MultiSelect()
+                            .Name("cargaPreguntas")
+                            .DataTextField("DescPregunta")
+                            .DataValueField("IdPregunta")
+                            .Placeholder("Seleccione las preguntas")
+
+                           .DataSource(source =>
+                           {
+                               source.Read(read =>
+                               {
+                                   read.Action("ObtenerPreguntasActivas", "PregPorForm");
+                               })
+                               .ServerFiltering(false);
+                           })
+                          )
+                    </div>
+                </div>               
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-4">
+        <div class="col-md-offset-2 col-lg-8 col-sm-12">
+            @Html.ActionLink(" REGRESAR", "Index", "Formulario", new object { }, new { @class = "btn boton fa fa-arrow-left col-sm-12 col-lg-3" })
+
+            <button type="button" id="btnguardar" name="btnguardar" class="btn boton fa col-sm-12 col-lg-3">
+                <i class="fas fa-save"></i>  GUARDAR
+            </button>
+
+        </div>
+    </div>
+}
+<script>
+    $("#btnguardar").click(function () {
+        var preguntas = $("#cargaPreguntas").data("kendoMultiSelect");
+        var sistema2 = $("#Formulario").data("kendoComboBox");
+        var mensaje = "Por favor complete los siguientes espacios:";
+
+        if (sistema2.value() == "") {
+            mensaje = mensaje + "<br>Nombre del sistema";
+        }
+        if (preguntas.value() == "") {
+            mensaje = mensaje + "<br>Seleccione las preguntas";
+        }
+        if (mensaje != "Por favor complete los siguientes espacios:") {
+            $("#mensajeAlerta").empty();
+            $("#mensajeAlerta").html(mensaje);
+            $('#mensajeValidacion').modal('show');
+        } else {
+            $("#frmEncuesta").submit();
+        }
+    });
+    
+</script>
+<!-- Modal -->
+<div class="modal fade" id="mensajeValidacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Evaluacion de Servicios | Formularios</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-2">
+                    <i class="fa-solid fa-circle-exclamation fa-3x"></i>
+                </div>
+                <div class="col-10" id="mensajeAlerta">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn boton" data-bs-dismiss="modal">CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .product-display {
+        background-color: #fff;
+        height: 40px;
+        width: 300px;
+        margin: 0px 2px;
+        text-align: left;
+    }
+</style>

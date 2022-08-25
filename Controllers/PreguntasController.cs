@@ -79,7 +79,7 @@ namespace EvaluacionServicios.Controllers
         private Preguntas ObtenerListaPreguntas()
         {
             Preguntas preguntasResult = new Preguntas();
-            List<Preguntas> lstResultados = new List<Preguntas>(objPreguntas.ObtenerPreguntas());
+            List<Preguntas> lstResultados = new List<Preguntas>(objPreguntas.ObtenerPreguntas("T"));
             preguntasResult.lstPreguntas = lstResultados;
             return preguntasResult;
         }

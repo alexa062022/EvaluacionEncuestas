@@ -47,14 +47,19 @@
                         @Html.TextAreaFor(model => model.Descripcion, htmlAttributes: new { @class = "form-control  rows = '1'", @maxlength = "5000", required = "required" })
                     </div>
                 </div>
-                @*<div class="form-group row mt-4">
-                    @Html.Label("Estado", htmlAttributes: new { @class = "control-label col-2 fw-bold" })
-                    @Html.HiddenFor(model => model.Activo)
-                    <div class="form-check form-switch col-8 m-lg-2">
-                        <input class="form-check-input" type="checkbox" name="activo" id="activo" checked="">
-                        <label class="form-check-label fw-bold" for="activo">Activo</label>
+                <div class="form-group row">
+                    @Html.Hidden("Color")
+                    @Html.Label("Seleccione el color del formulario", htmlAttributes: new { @class = "col-2 control-label fw-bold pb-2" })
+                    <div class="product-display col-6">
+                        @(Html.Kendo().ColorPalette()
+                          .Name("color-chooser")
+                          .Palette(new string[] { "#C45038", "#34974C", "#444DAC", "#349697", "#9B3D8E", "#D67D05", "#8E8D8B" })
+                          //.Value("#C45038")
+                          .TileSize(30)
+                          .Events(events => events.Change("changeColor"))
+                         )                        
                     </div>
-                </div>*@               
+                </div>
                 <div class="form-group mt-4">
                     <div class="col-md-offset-2 col-lg-8 col-sm-12">
                         @Html.ActionLink(" REGRESAR", "Index", "Formulario", new object { }, new { @class = "btn boton fa fa-arrow-left col-sm-12 col-lg-3" })
@@ -86,22 +91,22 @@
         if ($("#Descripcion").val() == "") {
             mensaje = mensaje + "<br>Descripción";
         }
+        if ($("#Color").val() == "") {
+            mensaje = mensaje + "<br>Color del formulario";            
+        }
         if (mensaje != "Por favor complete los siguientes espacios:") {
             $("#mensajeAlerta").empty();
             $("#mensajeAlerta").html(mensaje);
             $('#mensajeValidacion').modal('show');
         } else {
-            $("#IdSistema").val(sistema2.value());
-            //if ($("#activo").prop('checked')) {
-            //    $("#Activo").val(1);
-            //} else {
-            //    $("#Activo").val(0);
-            //}
+            $("#IdSistema").val(sistema2.value());            
             $("#frmFormulario").submit();
         }
-
     });
-
+    function changeColor() {
+        var colorId = this.value().substring(1);
+        $("#Color").val(colorId);
+    }
 </script>
 <!-- Modal -->
 <div class="modal fade" id="mensajeValidacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

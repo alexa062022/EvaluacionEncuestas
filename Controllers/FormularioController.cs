@@ -23,7 +23,7 @@ namespace EvaluacionServicios.Controllers
         {
             //mostrar forumularios que existen actualmente
             Formulario formulario = new Formulario();
-            List<Formulario> lstFormulario = new List<Formulario>(objFormulario.ObtenerFormularios());
+            List<Formulario> lstFormulario = new List<Formulario>(objFormulario.ObtenerFormularios("T"));
             formulario.lstFormulario = lstFormulario;
             return View(formulario);           
         }        
@@ -44,7 +44,7 @@ namespace EvaluacionServicios.Controllers
             {                          
                 formulario.CedulaUsuario = cedulaUsuario;
                 formulario.Activo = 1; // se asigna el valor 1 correspondiente activo a todos los formularios nuevos
-
+               // string color = formulario.Color;
                 resultadoInsert = objFormulario.IgresarFormulario(formulario);
                 if (resultadoInsert == -1)
                 {

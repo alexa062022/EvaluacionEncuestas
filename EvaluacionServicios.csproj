@@ -105,16 +105,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EscritorioController.cs" />
     <Compile Include="Controllers\FormularioController.cs" />
+    <Compile Include="Controllers\PregPorFormController.cs" />
     <Compile Include="Controllers\PreguntasController.cs" />
     <Compile Include="Controllers\SistemasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DAL\FormularioDAL.cs" />
+    <Compile Include="Models\DAL\PregPorFormDAL.cs" />
     <Compile Include="Models\DAL\PreguntasDAL.cs" />
     <Compile Include="Models\DAL\SistemasDAL.cs" />
     <Compile Include="Models\DAL\TipoPreguntaDAL.cs" />
     <Compile Include="Models\Formulario.cs" />
+    <Compile Include="Models\PregPorForm.cs" />
     <Compile Include="Models\Preguntas.cs" />
     <Compile Include="Models\Sistemas.cs" />
     <Compile Include="Models\TipoPregunta.cs" />
@@ -274,6 +277,7 @@
     <Content Include="Views\Preguntas\_listaPreguntas.cshtml" />
     <Content Include="Views\Preguntas\Edit.cshtml" />
     <Content Include="Views\Preguntas\Index.cshtml" />
+    <Content Include="Views\PregPorForm\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

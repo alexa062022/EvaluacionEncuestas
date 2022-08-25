@@ -11,7 +11,7 @@ namespace EvaluacionServicios.Models.DAL
     public class FormularioDAL
     {
         readonly string connectionString = ConfigurationManager.ConnectionStrings["Cnx"].ToString();
-        public IEnumerable<Formulario> ObtenerFormularios()
+        public IEnumerable<Formulario> ObtenerFormularios(string estado)
         {
             List<Formulario> lstFormulario = new List<Formulario>();
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -19,6 +19,7 @@ namespace EvaluacionServicios.Models.DAL
                 SqlCommand cmd = new SqlCommand("usp_Formularios_Select", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id_Sistema", -1);
+                cmd.Parameters.AddWithValue("@estado", estado); // A= activo, I= inactivo, T= todos
                 con.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
 
@@ -57,7 +58,8 @@ namespace EvaluacionServicios.Models.DAL
                 cmd.Parameters.AddWithValue("@Descripcion", formulario.Descripcion);
                 cmd.Parameters.AddWithValue("@Activo", formulario.Activo);
                 cmd.Parameters.AddWithValue("@Cedula_Usuario", formulario.CedulaUsuario);
-               
+                cmd.Parameters.AddWithValue("@Color", formulario.Color);
+
                 con.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
 
