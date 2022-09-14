@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Encuesta";
+    Layout = "~/Views/Shared/_LayoutEncuesta.cshtml";
+}
+
+@if (TempData["Error"] != null)
+{
+    <h2 class="mt-5">Oops!!..Se ha presentado un error</h2>
+
+    <hr />
+
+    <p class="mt-3">Los sentimos, se ha producido un error, por favor vuelva a intentarlo</p>
+    <br />
+    <div class="alert alert-danger" role="alert">
+        <div class="icono">
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+        </div>
+        @TempData["Error"].ToString()
+    </div>
+}
+
+@using (Html.BeginForm("Create", "Encuesta", FormMethod.Post, new { id = "frmFormulario" }))
+{
+    @Html.Hidden("IdFormulario")
+}
+
+<script>
+    $(document).ready(function () {
+        const valores = window.location.search;
+        //Creamos la instancia
+        const urlParams = new URLSearchParams(valores);
+        //Accedemos a los valores
+        var formularioId = urlParams.get('encuesta');
+        var error = @Html.Raw(Json.Encode(TempData["Error"]));
+        //verificamos si hay algun error o si se continua con el proceso
+        if (error) {
+            //si hay error se muestra en pantalla
+        } else {
+            //sino hay error hace el submit
+            $("#IdFormulario").val(formularioId);
+            $("#frmFormulario").submit();
+        }
+    });
+</script>
+

@@ -24,12 +24,12 @@ namespace EvaluacionServicios.Controllers
        
         // POST: Preguntas/Create
         [HttpPost]
-        public ActionResult Create(string pregunta, int IdTipoPregunta)
+        public ActionResult Create(string pregunta, int IdTipoPregunta, int justifica)
         {
             try
             {
                 int resultadoInsert;
-                resultadoInsert = objPreguntas.IgresarPregunta(pregunta, IdTipoPregunta);
+                resultadoInsert = objPreguntas.IgresarPregunta(pregunta, IdTipoPregunta, justifica);
                 switch (resultadoInsert)
                 {
                     case -1:

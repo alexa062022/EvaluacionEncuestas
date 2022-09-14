@@ -11,9 +11,8 @@ using Kendo.Mvc.UI;
 namespace EvaluacionServicios.Controllers
 {
     public class PregPorFormController : Controller
-    {
-        FormularioDAL objFormulario = new FormularioDAL();
-        //SistemasDAL objsistemas = new SistemasDAL();
+    {       
+        EncuestaDAL objEncuesta = new EncuestaDAL();
         PreguntasDAL objPreguntas = new PreguntasDAL();
         PregPorFormDAL objPregPorForm = new PregPorFormDAL();
         // readonly int cedulaUsuario = EvaluacionServicios.Models.Common.FrontUser.Get().Cedula;
@@ -23,26 +22,34 @@ namespace EvaluacionServicios.Controllers
         public ActionResult Index()
         {
             ListaCombobox();
-            return View();
+            return View(ObtenerListaEncuestas());
         }
         private void ListaCombobox()
         {
             IEnumerable<Formulario> lstFormularioResultados = objPregPorForm.ObtenerFormulariosActivos();
             ViewBag.ListaFormulario = lstFormularioResultados;
-        }
-        public JsonResult ObtenerPreguntasActivas()
-        {
             IEnumerable<Preguntas> lstPreguntas = objPreguntas.ObtenerPreguntas("A");
-            return Json(lstPreguntas, JsonRequestBehavior.AllowGet);
+            ViewBag.ListaPreguntas = lstPreguntas;
         }
-
+        //public JsonResult ObtenerPreguntasActivas()
+        //{
+        //    IEnumerable<Preguntas> lstPreguntas = objPreguntas.ObtenerPreguntas("A");
+        //    return Json(lstPreguntas, JsonRequestBehavior.AllowGet);
+        //}
+        private Encuesta ObtenerListaEncuestas()
+        {
+            Encuesta encuestasResult = new Encuesta();
+            List<Encuesta> lstResultados = new List<Encuesta>(objEncuesta.ObtenerEncuestas());
+            encuestasResult.lstEncuesta = lstResultados;
+            return encuestasResult;
+        }
         // GET: PregPorForm/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
             try
             {
-                string listaPreg = collection["cargaPreguntas"];
+                string listaPreg = collection["pregEncuesta"];
                 string idForm = collection["Formulario"];               
                 int result = objPregPorForm.IgresarPregPorForm(listaPreg, idForm);
                 if (result == 0)

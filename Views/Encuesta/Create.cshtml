@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+@model List<EvaluacionServicios.Models.Encuesta>
+@{
+    ViewBag.Title = "Create";
+    Layout = null;
+    var contador = 0;
+    string radio = "";
+    string op1 = "";
+    string op2 = "";
+    string op3 = "";
+    string op4 = "";
+    string op5 = "";
+    var formColor = "#" + ViewBag.ColorForm;
+    //var formColor = "#59AD63";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PGR | Encuesta </title>
+
+    <link href="https://kendo.cdn.telerik.com/2021.3.914/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/encuesta.css")" rel="stylesheet" type="text/css" />
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/kendo.aspnetmvc.min.js"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/messages/kendo.messages.es-ES.min.js"></script>
+    @Styles.Render("~/Content/all.min.css")
+    @Styles.Render("~/bundles/css")
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+
+    <style>
+        header {
+            background-color: @formColor;
+            background-image: linear-gradient(to top right, rgb(255, 255, 255, 0),rgb(255, 255, 255, 0), rgb(255, 255, 255, 0), #ffffff);
+            width: 100%;
+            height: auto;
+            color: white;
+           /* box-shadow: 10px 10px 8px #DCDCDC;*/
+        }
+        .header2{background-color: @formColor; width: 100%; height: 60px;}
+        footer{background-color:  @formColor; color: white; text-align:center; height:100px; padding-top: 50px}
+        .total {
+            text-align: left;
+            font-weight: bold;
+            color: @formColor;
+            padding: 10px 20px 0px 20px;
+        }
+        .botonEnviar {
+            background-color: @formColor;
+            transition-duration: 0.4s;
+            border: 2px solid @formColor;
+            opacity: 1;
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+            color: white;
+            width: 100%;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .botonEnviar:hover { opacity: 0.9; color:white;  border: 2px solid @formColor;}
+
+    </style>
+</head>
+
+<body>
+
+    <header>        
+        <img class="logo" src="~/Images/logo.png" alt="Logo de la Procuraduría General de la República">       
+        <h1 class="titulo1">Encuesta de @ViewBag.NombreSistema</h1>
+        <p class="titulo2">@ViewBag.Descripcion</p>
+    </header>
+    <main id="divMain">
+        
+        <div class="header2"></div>
+        <div id="divForm">
+            <h2 class="inst">Instrucciones Generales:</h2>
+            <ol class="instList">
+                <li>Lea cuidadosamente las preguntas.</li>
+                <li>Seleccione el boton que corresponde a su respuesta o digite la respuesta.</li>
+                <li>De click en el boton enviar, recuerde que todas las preguntas debe tener una respuesta asociada para que la informacion sea enviada.</li>
+            </ol>
+           
+            <p class="total">Total de Preguntas: @Model.Count</p>
+
+            <div class="formulario">
+                @using (Html.BeginForm("GuardarRespuestas", "Encuesta", FormMethod.Post, new { id = "frmEncuesta" }))
+                {
+                    foreach (var encuesta in Model)
+                    {
+                        contador += 1;
+                        radio = "radio-" + contador;
+                        op1 = "Op1-" + contador;
+                        op2 = "Op2-" + contador;
+                        op3 = "Op3-" + contador;
+                        op4 = "Op4-" + contador;
+                        op5 = "Op5-" + contador;
+                        <div class="preg">
+                            <p><b>@contador)  @encuesta.DescPregunta </b> </p>
+                            <input id=@contador name=@contador type="hidden" value=@encuesta.IdPregunta>
+                            @if (encuesta.IdTipoPregunta == 1)
+                            {
+                            <div class="radioDiv">
+                                <input type="radio" class="btn-check" name=@radio id=@op1 value="1" autocomplete="off" required>
+                                <label class="btn btn-info" for=@op1>1</label>
+
+                                <input type="radio" class="btn-check" name=@radio id=@op2 value="2" autocomplete="off">
+                                <label class="btn btn-info" for=@op2>2</label>
+
+                                <input type="radio" class="btn-check" name=@radio id=@op3 value="3" autocomplete="off">
+                                <label class="btn btn-info" for=@op3>3</label>
+
+                                <input type="radio" class="btn-check" name=@radio id=@op4 value="4" autocomplete="off">
+                                <label class="btn btn-info" for=@op4>4</label>
+
+                                <input type="radio" class="btn-check" name=@radio id=@op5 value="5" autocomplete="off">
+                                <label class="btn btn-info" for=@op5>5</label>
+                            </div>
+                            }
+                            else
+                            {
+                            <textarea id="w3review" name="w3review" rows="3" placeholder="Digite su respuesta" required style="width:100%;"></textarea>
+                            }
+                        </div>
+                    }
+                    @Html.Hidden("IdFormulario")
+
+                    <button type="submit" id="btnenviar" name="btnenviar" class="btn fa botonEnviar" >
+                        ENVIAR
+                    </button>
+                }
+            </div>
+        </div>        
+    </main>
+    <footer>2022&copy;Procuraduría General de la República</footer>
+    <script>
+        $(document).ready(function () {            
+            //funcion para recalcular la altura de algunos elementos
+            function altura() { 
+                if (($("#divForm").height()) > 1000) {
+                    $("#divMain").height(($("#divForm").height())-10);                    
+                }                
+            }
+            //se llama a funcion para recalcular altura, al cargar la pagina
+            altura();
+
+            //asigna valor al campo Idformulario al cargar la página
+            $("#IdFormulario").val(@ViewBag.IdForm);
+                     
+            //funcion jQuery llamada al ser cambiado el tamano de la pagina
+            $(window).resize(function () {
+                altura();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -16,6 +16,7 @@
               columns.Bound(p => p.TipoPregunta).Width(70).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
               columns.Bound(p => p.ActivoMostrar).Width(40).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
               columns.Bound(p => p.IdPregunta).Hidden();
+              columns.Bound(p => p.Justificar).Hidden();
               //columns.Bound(p => p.IdPregunta).HeaderHtmlAttributes(new { @class = "encabezadoTabla" }).ClientTemplate("<a href='" + Url.Action("Edit", "Preguntas", new { Pregunta = "#= DescPregunta #" }) + "' target=_self >Editar</a>").Title("Acciones").Filterable(false).Width(70);
               columns.Command(command => { command.Custom("Editar").Click("mostrarEditor"); }).Width(25).Title("Acciones");
 
@@ -42,12 +43,22 @@
             )
 )
 <script type="text/javascript">
-    function mostrarEditor(e) {
-            var grid = this;
-            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-            $("#frmPreguntas").css("display", "none");
-            $("#frmPreguntasEditar").css("display", "block");
-            $("#preguntaEditar").val(dataItem.DescPregunta);
-            $("#idPregunta").val(dataItem.IdPregunta);
+    function mostrarEditor(e) {       
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        $("#frmPreguntas").css("display", "none");        
+        $("#frmPreguntasEditar").css("display", "block");
+        $("#preguntaEditar").val(dataItem.DescPregunta);
+        $("#idPregunta").val(dataItem.IdPregunta);
+        if (dataItem.TipoPregunta == "Escala de Likert") {
+            $("#justificacion2").css("display", "block");
+            if (dataItem.Justificar == 1) {
+                $("#checkJustificacion2").prop('checked', true);
+            } else {
+                $("#checkJustificacion2").prop('checked', false);
+            }
+        } else
+        {
+            $("#justificacion2").css("display", "none");
         }
+    }
     </script>

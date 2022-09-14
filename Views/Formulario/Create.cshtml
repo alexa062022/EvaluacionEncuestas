@@ -53,7 +53,7 @@
                     <div class="product-display col-6">
                         @(Html.Kendo().ColorPalette()
                           .Name("color-chooser")
-                          .Palette(new string[] { "#C45038", "#34974C", "#444DAC", "#349697", "#9B3D8E", "#D67D05", "#8E8D8B" })
+                          .Palette(new string[] { "#732936", "#257137", "#1A3B63", "#177B84", "#A45E03", "#706F6E" })
                           //.Value("#C45038")
                           .TileSize(30)
                           .Events(events => events.Change("changeColor"))
@@ -92,7 +92,7 @@
             mensaje = mensaje + "<br>Descripción";
         }
         if ($("#Color").val() == "") {
-            mensaje = mensaje + "<br>Color del formulario";            
+            $("#Color").val("23374f");//si no se elije color, se usa el color institucional
         }
         if (mensaje != "Por favor complete los siguientes espacios:") {
             $("#mensajeAlerta").empty();

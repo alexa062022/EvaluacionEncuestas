@@ -18,7 +18,7 @@ namespace EvaluacionServicios.Models.DAL
             {
                 SqlCommand cmd = new SqlCommand("usp_Formularios_Select", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id_Sistema", -1);
+                cmd.Parameters.AddWithValue("@Id_Formulario", -1);
                 cmd.Parameters.AddWithValue("@estado", estado); // A= activo, I= inactivo, T= todos
                 con.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();

@@ -26,6 +26,8 @@ namespace EvaluacionServicios.Models
         [Display(Name = "Tipo de Pregunta")]
         public string TipoPregunta { get; set; }
 
+        public int Justificar { get; set; }
+
         public virtual ICollection<Preguntas> lstPreguntas { get; set; }
     }
 }

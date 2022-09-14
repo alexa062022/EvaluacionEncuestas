@@ -1,9 +1,9 @@
-﻿
+﻿@model EvaluacionServicios.Models.Encuesta
 @{
-    ViewBag.Title = "Crear Encuesta";
+    ViewBag.Title = "Encuesta";
 }
 
-<h2 class="mt-5">Crear Encuesta</h2>
+<h2 class="mt-5">Encuesta</h2>
 <hr class="mb-3" />
 @if (TempData["Correcto"] != null)
 {
@@ -26,13 +26,16 @@
         @TempData["Error"].ToString()
     </div>
 }
-@using (Html.BeginForm("Create", "PregPorForm", FormMethod.Post, new { id = "frmEncuesta" }))
-{
-    <div class="card my-4">
-        <div class="card-header">
-            <i class="fa-solid fa-gears"></i> Datos requeridos para la creación de una encuesta:
-        </div>
-        <div class="card-body my-4 px-5">
+<nav class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">CREAR ENCUESTA</a>
+    <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">ENCUESTAS ACTUALES</a>
+
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        @using (Html.BeginForm("Create", "PregPorForm", FormMethod.Post, new { id = "frmEncuesta" }))
+        {
+
             <div class="form-horizontal form-label-font-weight">
 
                 <div class="form-group row">
@@ -52,74 +55,155 @@
                          )
                     </div>
                 </div>
-                @*<div class="form-group row">
-                        @Html.Label("Descripción", htmlAttributes: new { @class = "control-label fw-bold pb-2" })
-                        <div class="form-group ">
-                            @Html.TextArea("descripcion", htmlAttributes: new { @class = "form-control  rows = '1'", @maxlength = "5000", disabled = "true" })
-                        </div>
-                    </div>*@
-                <div class="k-d-flex k-justify-content-left" style="padding-top: 0px; padding-bottom: 180px;">
-                    <div class="k-w-300">
-                        <label for="required" style="padding-bottom: 5px; font-weight: bold;">Seleccione las preguntas, en el orden que desea que aparezcan en la encuesta</label>
-                        @(Html.Kendo().MultiSelect()
-                            .Name("cargaPreguntas")
-                            .DataTextField("DescPregunta")
-                            .DataValueField("IdPregunta")
-                            .Placeholder("Seleccione las preguntas")
-
-                           .DataSource(source =>
-                           {
-                               source.Read(read =>
-                               {
-                                   read.Action("ObtenerPreguntasActivas", "PregPorForm");
-                               })
-                               .ServerFiltering(false);
-                           })
-                          )
+                <div class="form-group row">
+                    @Html.Label("Seleccione las preguntas, en el orden que desea que aparezcan en la encuesta", htmlAttributes: new { @class = "control-label  fw-bold pb-2" })
+                    <div class="col-11">
+                        @(Html.Kendo().ComboBox()
+                               .Name("PreguntasDisponibles")
+                               .DataTextField("DescPregunta")
+                               .DataValueField("IdPregunta")
+                               .Filter("Contains")
+                               .Placeholder("Seleccione la pregunta")
+                               .BindTo(@ViewBag.ListaPreguntas)
+                               .SelectedIndex(-1)
+                               .Suggest(false)
+                               .IgnoreCase(true)
+                               .HtmlAttributes(new { style = "width:100%;text-transform:uppercase;", @class = "", required = "required" })
+                             )
                     </div>
-                </div>               
+
+                    <div class="col-1">
+                        <a id="btnAgregar" class="btn boton" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar Pregunta"><i class="fas fa-plus"></i></a>
+                    </div>
+
+                    <div style="margin: 100px 0px 80px 0px;">
+                        @Html.Label("Preguntas Seleccionadas", htmlAttributes: new { @class = "control-label  fw-bold pb-2" })
+
+                        <table id="tablaPregunta" class="table table-striped table-hover  table-bordered">
+                            <thead class="encabezadoTabla">
+                                <tr>
+                                    <th style="display:none">
+                                        ID
+                                    </th>
+                                    <th>
+                                        Pregunta
+                                    </th>
+                                    <th>
+                                        Acción
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="form-group mt-4">
-        <div class="col-md-offset-2 col-lg-8 col-sm-12">
-            @Html.ActionLink(" REGRESAR", "Index", "Formulario", new object { }, new { @class = "btn boton fa fa-arrow-left col-sm-12 col-lg-3" })
+            @Html.Hidden("pregEncuesta")
+            <div class="form-group mt-4">
+                <div class="col-md-offset-2 col-lg-8 col-sm-12">
+                    @Html.ActionLink(" REGRESAR", "Index", "Formulario", new object { }, new { @class = "btn boton fa fa-arrow-left col-sm-12 col-lg-3" })
 
-            <button type="button" id="btnguardar" name="btnguardar" class="btn boton fa col-sm-12 col-lg-3">
-                <i class="fas fa-save"></i>  GUARDAR
-            </button>
+                    <button type="button" id="btnguardar" name="btnguardar" class="btn boton fa col-sm-12 col-lg-3">
+                        <i class="fas fa-save"></i>  GUARDAR
+                    </button>
 
-        </div>
+                </div>
+            </div>
+        }
     </div>
-}
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+       
+         <div style="height:900px;"> @Html.Partial("_listaEncuestas", Model) </div>           
+    </div>
+</div>
+
 <script>
-    $("#btnguardar").click(function () {
-        var preguntas = $("#cargaPreguntas").data("kendoMultiSelect");
-        var sistema2 = $("#Formulario").data("kendoComboBox");
-        var mensaje = "Por favor complete los siguientes espacios:";
+    $(document).ready(function () {
+        var mensaje = "";
+        var Id = 0;
+        var PregSelect = "";
+        var Pregunta = $("#PreguntasDisponibles").data("kendoComboBox");
+        var pregArray = [];
+        var agregar = false;
 
-        if (sistema2.value() == "") {
-            mensaje = mensaje + "<br>Nombre del sistema";
-        }
-        if (preguntas.value() == "") {
-            mensaje = mensaje + "<br>Seleccione las preguntas";
-        }
-        if (mensaje != "Por favor complete los siguientes espacios:") {
-            $("#mensajeAlerta").empty();
-            $("#mensajeAlerta").html(mensaje);
-            $('#mensajeValidacion').modal('show');
-        } else {
-            $("#frmEncuesta").submit();
-        }
+        //agregar preguntas a la tabla
+        $("#btnAgregar").on("click", function (e) {
+            mensaje = "Por favor complete los siguientes espacios:";
+            if (Pregunta.value() == "") {
+                mensaje = mensaje + "<br>Seleccione la pregunta";
+            } else {
+                Id = Pregunta.value();
+                PregSelect = Pregunta.text();
+                if (pregArray.length == 0) {
+                    pregArray.push(Id);
+                    agregar = true;
+                } else {
+                    if (pregArray.includes(Id)) {
+                        //ya existe la pregunta
+                        mensaje = "Error: <br>No puede agregar una pregunta repetida";
+                        agregar = false;
+                    } else {
+                        pregArray.push(Id);
+                        agregar = true;
+                    }
+                }
+                if (agregar) {
+                    var htmlTags = '<tr>' +
+                        '<td style="display:none">' + Id + '</td>' +
+                        '<td>' + PregSelect + '</td>' +
+                        '<td> <a href="#" class="eliminar">Eliminar</a> </td>' +
+                        '</tr>';
+                    $('#tablaPregunta tbody').append(htmlTags);
+                }
+            }
+            if (mensaje != "Por favor complete los siguientes espacios:") {
+                $("#mensajeAlerta").empty();
+                $("#mensajeAlerta").html(mensaje);
+                $('#mensajeValidacion').modal('show');
+            }
+        });
+
+        $("#tablaPregunta").on("click", ".eliminar", function (e) {
+            e.preventDefault();
+            var idPreg = $(this).closest('td').prev('td').prev('td').text();
+            //elimina el id Pregunta del arreglo
+            var indice = pregArray.indexOf(idPreg); // obtenemos el indice
+            pregArray.splice(indice, 1); // 1 es la cantidad de elemento a eliminar
+            //elimina la fila de la tabla
+            e.target.parentNode.parentNode.remove();
+        });
+
+        //guardar la encuesta creada en DB
+        $("#btnguardar").click(function () {
+            var sistema2 = $("#Formulario").data("kendoComboBox");
+            var listaPreguntas = pregArray.toString();
+            mensaje = "Por favor complete los siguientes espacios:";
+            //se asignan valores y verifica que todos los campos esten llenos
+            $('#pregEncuesta').val(listaPreguntas);
+            if (sistema2.value() == "") {
+                mensaje = mensaje + "<br>Nombre del sistema";
+            }
+            if ($('#pregEncuesta').val() == "") {
+                mensaje = mensaje + "<br>Seleccione las preguntas";
+            }
+            if (mensaje != "Por favor complete los siguientes espacios:") {
+                $("#mensajeAlerta").empty();
+                $("#mensajeAlerta").html(mensaje);
+                $('#mensajeValidacion').modal('show');
+            } else {
+                $("#frmEncuesta").submit();
+            }
+        });
     });
-    
 </script>
 <!-- Modal -->
 <div class="modal fade" id="mensajeValidacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Evaluacion de Servicios | Formularios</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Evaluacion de Servicios | Crear Encuesta</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body row">

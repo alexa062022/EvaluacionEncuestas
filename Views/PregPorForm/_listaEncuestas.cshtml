@@ -1,0 +1,45 @@
+﻿@model EvaluacionServicios.Models.Encuesta
+
+<style>
+    .k-grid .k-grid-search {
+        display: flex;
+        margin-left: auto;
+        margin-right: 0;
+    }
+</style>
+
+@(Html.Kendo().Grid(Model.lstEncuesta)
+          .Name("grdEncuestas")
+          .ToolBar(t => t.Search().Text("Buscar.."))
+          .Columns(columns =>
+          {
+              columns.Bound(p => p.IdFormulario).Width(40).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              columns.Bound(p => p.NombreSistema).Width(40).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              columns.Bound(p => p.DescPregunta).Width(200).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });              
+              
+          })
+          .ToolBar(tools => tools.Excel().Text("Exportar a Excel"))
+              .HtmlAttributes(new { style = "height:750px; font-size: 16px;" })
+              .Pageable(pageable => pageable
+              .Input(true)
+              .Numeric(false)
+          )
+              .Excel(excel => excel
+              .FileName("ListadoDePreguntas.xlsx")
+              .Filterable(true)
+              .AllPages(true)
+              .ProxyURL(Url.Action("Exportar_Result_Excel"))
+          )
+             .Sortable()
+             .Scrollable(scr => scr.Height(650))
+             .Filterable()
+             .DataSource(dataSource => dataSource
+             .Ajax()
+             .PageSize(20)
+             .ServerOperation(false)
+            )
+)
+@*<script type="text/javascript">
+   
+</script>*@
+

@@ -30,6 +30,7 @@ namespace EvaluacionServicios.Models.DAL
                     RespuestasResult.DescPregunta = rdr["Desc_Pregunta"].ToString();
                     RespuestasResult.TipoPregunta = rdr["Desc_Tipo_Pregunta"].ToString();
                     RespuestasResult.Activo = Convert.ToInt32(rdr["Activo"]);
+                    RespuestasResult.Justificar = Convert.ToInt32(rdr["Justificacion"]);
                     if (RespuestasResult.Activo == 0)
                     {
                         RespuestasResult.ActivoMostrar = "Desactivo";
@@ -42,7 +43,7 @@ namespace EvaluacionServicios.Models.DAL
             }
             return lstPreguntas;
         }
-        public int IgresarPregunta(string pregunta, int idTipo)
+        public int IgresarPregunta(string pregunta, int idTipo, int justifica)
         {
             int resultado = 0;
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -51,7 +52,8 @@ namespace EvaluacionServicios.Models.DAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Desc_Pregunta", pregunta);
                 cmd.Parameters.AddWithValue("@Id_Tipo_Pregunta", idTipo);
-                 cmd.Parameters.AddWithValue("@Activo", 1); // Nuevas preguntas por default van a ser activas
+                cmd.Parameters.AddWithValue("@Activo", 1); // Nuevas preguntas por default van a ser activas
+                cmd.Parameters.AddWithValue("@Justificacion", justifica);
                 con.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
 

@@ -103,6 +103,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EncuestaController.cs" />
     <Compile Include="Controllers\EscritorioController.cs" />
     <Compile Include="Controllers\FormularioController.cs" />
     <Compile Include="Controllers\PregPorFormController.cs" />
@@ -111,11 +112,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DAL\EncuestaDAL.cs" />
     <Compile Include="Models\DAL\FormularioDAL.cs" />
     <Compile Include="Models\DAL\PregPorFormDAL.cs" />
     <Compile Include="Models\DAL\PreguntasDAL.cs" />
     <Compile Include="Models\DAL\SistemasDAL.cs" />
     <Compile Include="Models\DAL\TipoPreguntaDAL.cs" />
+    <Compile Include="Models\Encuesta.cs" />
     <Compile Include="Models\Formulario.cs" />
     <Compile Include="Models\PregPorForm.cs" />
     <Compile Include="Models\Preguntas.cs" />
@@ -154,6 +157,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\brands.css" />
     <Content Include="Content\brands.min.css" />
+    <Content Include="Content\encuesta.css" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
     <Content Include="Content\regular.css" />
@@ -187,6 +191,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\logo2.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -278,6 +284,10 @@
     <Content Include="Views\Preguntas\Edit.cshtml" />
     <Content Include="Views\Preguntas\Index.cshtml" />
     <Content Include="Views\PregPorForm\Index.cshtml" />
+    <Content Include="Views\Encuesta\Index.cshtml" />
+    <Content Include="Views\Encuesta\Create.cshtml" />
+    <Content Include="Views\Shared\_LayoutEncuesta.cshtml" />
+    <Content Include="Views\PregPorForm\_listaEncuestas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
