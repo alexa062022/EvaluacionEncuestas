@@ -43,8 +43,22 @@
             )
 )
 <script type="text/javascript">
-    function mostrarEditor(e) {       
+    function mostrarEditor(e) {
+        var url = "@Url.Action("VerificaPreg", "Preguntas")";
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var data = { idPreg: dataItem.IdPregunta };
+
+        //verifica en base de datos si la pregunta tiene respuestas asociadas, si es asi, no permite modificar la descripcion de la pregunta
+        $.post(url, data).done(function (data) {
+            if (data == 1) {
+                $("#preguntaEditar").prop('disabled', true);
+            } else {
+                $("#preguntaEditar").prop('disabled', false);
+            }
+
+        }).fail(function () { alert("Error de Base de datos") });
+
+        //Se habilita o deshabilita los formularios
         $("#frmPreguntas").css("display", "none");        
         $("#frmPreguntasEditar").css("display", "block");
         $("#preguntaEditar").val(dataItem.DescPregunta);

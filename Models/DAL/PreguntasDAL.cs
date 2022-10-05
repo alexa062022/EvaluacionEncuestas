@@ -66,7 +66,28 @@ namespace EvaluacionServicios.Models.DAL
             return resultado;
         }
 
-        public int EditarPregunta(int idPregunta, string pregunta, int estado)
+        public int BuscarPregunta(int idPregunta) //verifica si la pregunta tiene una respuesta asociada
+        {
+            int existe = 0;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("usp_Respuestas_VerificaUso", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id_Pregunta", idPregunta);                
+                con.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    existe = Convert.ToInt32(rdr[0]);
+                     
+                }
+                con.Close();
+            }
+            return existe;
+        }
+
+        public int EditarPregunta(int idPregunta, string pregunta, int estado, int justifica2)
         {
             int resultado = 0;
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -75,7 +96,8 @@ namespace EvaluacionServicios.Models.DAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id_Pregunta", idPregunta);
                 cmd.Parameters.AddWithValue("@Desc_Pregunta", pregunta);                
-                cmd.Parameters.AddWithValue("@Activo", estado); 
+                cmd.Parameters.AddWithValue("@Activo", estado);
+                cmd.Parameters.AddWithValue("@Justificacion", justifica2);
                 con.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
 

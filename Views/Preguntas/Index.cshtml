@@ -110,7 +110,7 @@
                     <label class="form-check-label fw-bold" for="checkJustificacion2">Agregar justificación a la pregunta</label>
                 </div>
             </div>
-            @Html.Hidden("justifica")
+            @Html.Hidden("justifica2")
             <div class="form-group mt-4">
                 <div class="col-md-offset-2 col-lg-8 col-sm-12">
                     @Html.ActionLink("REGRESAR", "Index", "Escritorio", new object { }, new { @class = "btn boton fa fa-arrow-left col-sm-12 col-lg-3" })                    
@@ -153,9 +153,9 @@
             }
         });
     });
-    
+
     $("#btnguardar").click(function () {
-        var tipoPreg = $("#TipoPregunta").data("kendoComboBox");        
+        var tipoPreg = $("#TipoPregunta").data("kendoComboBox");
         //verifica que los campos esten llenos para continuar, de lo contrario envia mensaje en pantalla
         var mensaje = "Por favor complete los siguientes espacios:";
         if (tipoPreg.value() == "") {
@@ -192,6 +192,7 @@
             } else {
                 $("#Activo").val(0);
             }
+            if ($("#checkJustificacion2").prop('checked')) { $("#justifica2").val(1); } else { $("#justifica2").val(0); }           
             $("#frmPreguntasEditar").submit();
         }
 

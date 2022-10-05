@@ -57,7 +57,7 @@
                 </div>
                 <div class="form-group row">
                     @Html.Label("Seleccione las preguntas, en el orden que desea que aparezcan en la encuesta", htmlAttributes: new { @class = "control-label  fw-bold pb-2" })
-                    <div class="col-11">
+                    <div >
                         @(Html.Kendo().ComboBox()
                                .Name("PreguntasDisponibles")
                                .DataTextField("DescPregunta")
@@ -70,11 +70,7 @@
                                .IgnoreCase(true)
                                .HtmlAttributes(new { style = "width:100%;text-transform:uppercase;", @class = "", required = "required" })
                              )
-                    </div>
-
-                    <div class="col-1">
-                        <a id="btnAgregar" class="btn boton" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar Pregunta"><i class="fas fa-plus"></i></a>
-                    </div>
+                    </div>                   
 
                     <div style="margin: 100px 0px 80px 0px;">
                         @Html.Label("Preguntas Seleccionadas", htmlAttributes: new { @class = "control-label  fw-bold pb-2" })
@@ -127,9 +123,8 @@
         var Pregunta = $("#PreguntasDisponibles").data("kendoComboBox");
         var pregArray = [];
         var agregar = false;
-
         //agregar preguntas a la tabla
-        $("#btnAgregar").on("click", function (e) {
+        $("#PreguntasDisponibles").change(function () {
             mensaje = "Por favor complete los siguientes espacios:";
             if (Pregunta.value() == "") {
                 mensaje = mensaje + "<br>Seleccione la pregunta";
@@ -174,7 +169,9 @@
             //elimina la fila de la tabla
             e.target.parentNode.parentNode.remove();
         });
-
+        $("#btnConfirmar").click(function () {
+            $("#frmEncuesta").submit();            
+        });
         //guardar la encuesta creada en DB
         $("#btnguardar").click(function () {
             var sistema2 = $("#Formulario").data("kendoComboBox");
@@ -193,7 +190,10 @@
                 $("#mensajeAlerta").html(mensaje);
                 $('#mensajeValidacion').modal('show');
             } else {
-                $("#frmEncuesta").submit();
+                mensaje = "Por favor verifique las preguntas y el orden de las misma, ya que una vez guardada la encuesta, esta no se podrá modificar:";               
+                $("#mensajeAlerta2").empty();
+                $("#mensajeAlerta2").html(mensaje);
+                $('#mensajeConfirmacion').modal('show');
             }
         });
     });
@@ -216,6 +216,28 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn boton" data-bs-dismiss="modal">CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="mensajeConfirmacion" tabindex="-2" aria-labelledby="mensajeConfirmacion" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Evaluacion de Servicios | Crear Encuesta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-2">
+                    <i class="fa-solid fa-circle-exclamation fa-3x"></i>
+                </div>
+                <div class="col-10" id="mensajeAlerta2">
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn boton" data-bs-dismiss="modal">CERRAR</button>
+                <button type="button" id="btnConfirmar" class="btn btn-primary">CONFIRMAR</button>
             </div>
         </div>
     </div>

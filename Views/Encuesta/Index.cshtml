@@ -18,6 +18,18 @@
         @TempData["Error"].ToString()
     </div>
 }
+@if (TempData["Correcto"] != null)
+{
+    <h2 class="mt-5">Gracias por participar en la encuesta</h2>
+
+    <hr />
+    <div class="alert alert-success" role="alert">
+        <div class="icono">
+            <i class="fas fa-check-circle fa-2x"></i>
+        </div>
+        @TempData["Correcto"].ToString()
+    </div>
+}
 
 @using (Html.BeginForm("Create", "Encuesta", FormMethod.Post, new { id = "frmFormulario" }))
 {
@@ -32,11 +44,12 @@
         //Accedemos a los valores
         var formularioId = urlParams.get('encuesta');
         var error = @Html.Raw(Json.Encode(TempData["Error"]));
+        var correcto = @Html.Raw(Json.Encode(TempData["Correcto"]));
         //verificamos si hay algun error o si se continua con el proceso
-        if (error) {
-            //si hay error se muestra en pantalla
+        if (error || correcto) {
+            //si hay mensaje se muestra en pantalla
         } else {
-            //sino hay error hace el submit
+            //sino hay error o mensaje hace el submit
             $("#IdFormulario").val(formularioId);
             $("#frmFormulario").submit();
         }

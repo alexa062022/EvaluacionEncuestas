@@ -4,15 +4,18 @@
 @{
     ViewBag.Title = "Create";
     Layout = null;
-    var contador = 0;
+    int contador = 0;
+    string pregunta = "";
     string radio = "";
     string op1 = "";
     string op2 = "";
     string op3 = "";
     string op4 = "";
     string op5 = "";
-    var formColor = "#" + ViewBag.ColorForm;
+    string formColor = "#" + ViewBag.ColorForm;
     //var formColor = "#59AD63";
+    string respuesta = "";
+    string justifica = "";
 }
 <head>
     <meta charset="utf-8" />
@@ -92,52 +95,67 @@
                     foreach (var encuesta in Model)
                     {
                         contador += 1;
+                        pregunta= "pregunta-" + contador;
                         radio = "radio-" + contador;
                         op1 = "Op1-" + contador;
                         op2 = "Op2-" + contador;
                         op3 = "Op3-" + contador;
                         op4 = "Op4-" + contador;
                         op5 = "Op5-" + contador;
-                        <div class="preg">
-                            <p><b>@contador)  @encuesta.DescPregunta </b> </p>
-                            <input id=@contador name=@contador type="hidden" value=@encuesta.IdPregunta>
-                            @if (encuesta.IdTipoPregunta == 1)
-                            {
-                            <div class="radioDiv">
-                                <input type="radio" class="btn-check" name=@radio id=@op1 value="1" autocomplete="off" required>
-                                <label class="btn btn-info" for=@op1>1</label>
+                        justifica = "justifica-" + contador;
+                        respuesta = "respuesta-" + contador;
 
-                                <input type="radio" class="btn-check" name=@radio id=@op2 value="2" autocomplete="off">
-                                <label class="btn btn-info" for=@op2>2</label>
+                <div class="preg">
+                    <p><b>@contador)  @encuesta.DescPregunta </b> </p>
+                    <input id=@pregunta name=@pregunta type="hidden" value=@encuesta.IdPregunta>
+                    @if (encuesta.IdTipoPregunta == 1)
+                    {
+                        <div class="radioDiv">
+                            <input type="radio" class="btn-check" name=@radio id=@op1 value="1" autocomplete="off" required>
+                            <label class="btn btn-info" for=@op1>1</label>
 
-                                <input type="radio" class="btn-check" name=@radio id=@op3 value="3" autocomplete="off">
-                                <label class="btn btn-info" for=@op3>3</label>
+                            <input type="radio" class="btn-check" name=@radio id=@op2 value="2" autocomplete="off">
+                            <label class="btn btn-info" for=@op2>2</label>
 
-                                <input type="radio" class="btn-check" name=@radio id=@op4 value="4" autocomplete="off">
-                                <label class="btn btn-info" for=@op4>4</label>
+                            <input type="radio" class="btn-check" name=@radio id=@op3 value="3" autocomplete="off">
+                            <label class="btn btn-info" for=@op3>3</label>
 
-                                <input type="radio" class="btn-check" name=@radio id=@op5 value="5" autocomplete="off">
-                                <label class="btn btn-info" for=@op5>5</label>
-                            </div>
-                            }
-                            else
-                            {
-                            <textarea id="w3review" name="w3review" rows="3" placeholder="Digite su respuesta" required style="width:100%;"></textarea>
-                            }
+                            <input type="radio" class="btn-check" name=@radio id=@op4 value="4" autocomplete="off">
+                            <label class="btn btn-info" for=@op4>4</label>
+
+                            <input type="radio" class="btn-check" name=@radio id=@op5 value="5" autocomplete="off">
+                            <label class="btn btn-info" for=@op5>5</label>
                         </div>
+                        if (encuesta.Justificacion == 1)
+                        {
+                            <label class="pb-2 pt-4 fw-bold" for=justifica>Justifique su respuesta</label>
+                            <textarea id="@justifica" name="@justifica" rows="2" maxlength="500" style="width:100%;"></textarea>
+                        }
+                        else
+                        {
+                            <input id=@justifica name=@justifica type="hidden" value=0>
+                        }
+                    }
+                    else
+                    {
+                        <textarea id="@respuesta" name="@respuesta" rows="3" placeholder="Digite aquí su respuesta..." maxlength="500" required style="width:100%;"></textarea>
+                        <input id=@justifica name=@justifica type="hidden" value=0>
+                    }
+                </div>
                     }
                     @Html.Hidden("IdFormulario")
 
                     <button type="submit" id="btnenviar" name="btnenviar" class="btn fa botonEnviar" >
                         ENVIAR
                     </button>
-                }
+                 }
             </div>
         </div>        
     </main>
     <footer>2022&copy;Procuraduría General de la República</footer>
     <script>
         $(document).ready(function () {            
+           
             //funcion para recalcular la altura de algunos elementos
             function altura() { 
                 if (($("#divForm").height()) > 1000) {
@@ -154,6 +172,16 @@
             $(window).resize(function () {
                 altura();
             });
+            $("textarea").keypress(function (e) { //previene el ingreso de caracteres no permitidos []|
+                
+                if ((e.charCode == 124) || (e.charCode == 91) || (e.charCode == 93) ) {
+                    
+                    return false;
+                }
+            });
+            $("textarea").on('paste', function (e) { //no permite pegar texto en los textarea, para evitar el ingreso de caracteres no permitidos
+                e.preventDefault();               
+            })
         });
     </script>
 </body>

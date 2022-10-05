@@ -22,86 +22,74 @@
 
     <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
 </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark barraMenu">
-            <div class="container">
-                @Html.ActionLink("Evaluación de Servicios PGR", "Index", "Escritorio", new { area = "" }, new { @class = "navbar-brand" })
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark barraMenu">
+        <div class="container">
+            @Html.ActionLink("Evaluación de Servicios PGR", "Index", "Escritorio", new { area = "" }, new { @class = "navbar-brand" })
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="navbar-collapse collapse d-flex justify-content-between">
-                    <ul class="nav navbar-nav mr-auto">
-                        <li class="nav-item">@Html.ActionLink("Sistemas", "Index", "Sistemas", null, new { @class = "nav-link" })</li>
+            <div class="navbar-collapse collapse d-flex justify-content-between">
+                <ul class="nav navbar-nav mr-auto">
 
-                        <li class="nav-item">@Html.ActionLink("Formularios", "Index", "Formulario", null, new { @class = "nav-link" })</li>
-
-                        <li class="nav-item">@Html.ActionLink("Preguntas", "Index", "Preguntas", null, new { @class = "nav-link" })</li>
-
-                        <li class="nav-item">@Html.ActionLink("Crear Encuesta", "Index", "PregPorForm", null, new { @class = "nav-link" })</li>
-
-                        @*<li class="nav-item ItemMenuPadre">
-            @Html.ActionLink("Ir a...", "Index", "Escritorio", null, new { @class = "nav-link" })
-            <ul>
-
-                <li>@Html.ActionLink("Catalogos", "Index", "Catalogos", null, new { @class = "nav-link" })</li>
-                <li class="nav-item">@Html.ActionLink("Firmador", "Index", "Documentos_Firmas", null, new { @class = "nav-link" })</li>
-            </ul>
-        </li>
-
-        <li class="nav-item">@Html.ActionLink("Tutoriales", "Index", "Tutoriales", null, new { @class = "nav-link" })</li>
-                        *@
-                    </ul>
-
-                        @*@if (Helper.SessionHelper.ExistUserInSession())
-        {
-            <div class="d-flex  flex-row-reverse">
-                <div class="text-center well">
-                    Bienvenido(a), <b>@PGREvaluacion.Models.Common.FrontUser.Get().Nombre</b> [<a href="~/Escritorio/salir">Finalizar sesión</a>]
-                </div>
-            </div>
-        }*@
-</div>
-
-                <ul class="nav nav-pills">
+                    <li class="nav-item ItemMenuPadre">
+                        @Html.ActionLink("Catálogos", "Index", "Escritorio", null, new { @class = "nav-link" })
+                        <ul>
+                            <li class="nav-item">@Html.ActionLink("Sistemas", "Index", "Sistemas", null, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Formularios", "Index", "Formulario", null, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Preguntas", "Index", "Preguntas", null, new { @class = "nav-link" })</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">@Html.ActionLink("Encuestas", "Index", "PregPorForm", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Reportes", "Index", "Reportes", null, new { @class = "nav-link" })</li>
                 </ul>
-
+                @*@if (Helper.SessionHelper.ExistUserInSession())
+                    {
+                        <div class="d-flex  flex-row-reverse">
+                            <div class="text-center well">
+                                Bienvenido(a), <b>@PGREvaluacion.Models.Common.FrontUser.Get().Nombre</b> [<a href="~/Escritorio/salir">Finalizar sesión</a>]
+                            </div>
+                        </div>
+                    }*@
             </div>
-        </nav>
 
-        <main>
-            <div class="container body-content">
+                @*<ul class="nav nav-pills">
+                </ul>*@
 
-                @*@Html.MvcSiteMap().SiteMapPath()*@
-                @RenderBody()
-            </div>
-        </main>
-
-        <div class="tituloFooter footerInterno">
-            @Html.ActionLink("Evaluación de Servicios PGR", "Index", "Escritorio")
         </div>
-        <footer class="container-fluid">
+    </nav>
+    
+    <main>
+        <div class="container body-content">
 
-            <div class="container">
-                <p class="d-flex justify-content-center">Procuradur&iacute;a General de la Rep&uacute;blica</p>
-                <p class="d-flex justify-content-center">&copy; @DateTime.Now.Year - PGR</p>
-            </div>
-        </footer>
+            @*@Html.MvcSiteMap().SiteMapPath()*@
+            @RenderBody()
+        </div>
+    </main>
+    
+    <footer class="container-fluid">
 
-        <script>
-            $(document).ready(function () {
-                $("#responsive-panel").kendoResponsivePanel({
-                    breakpoint: 768,
-                    autoClose: false,
-                    orientation: "top"
-                });
+        <div class="container">
+            <p class="d-flex justify-content-center">Procuradur&iacute;a General de la Rep&uacute;blica</p>
+            <p class="d-flex justify-content-center">&copy; @DateTime.Now.Year - PGR</p>
+        </div>
+    </footer>
+
+    <script>
+        $(document).ready(function () {
+            $("#responsive-panel").kendoResponsivePanel({
+                breakpoint: 768,
+                autoClose: false,
+                orientation: "top"
             });
-            function onclick(e) {
-                $("#responsive-panel").getKendoResponsivePanel().toggle();
-            }
-        </script>
+        });
+        function onclick(e) {
+            $("#responsive-panel").getKendoResponsivePanel().toggle();
+        }
+    </script>
 
-        @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false)
 
-    </body>
+</body>
 </html>

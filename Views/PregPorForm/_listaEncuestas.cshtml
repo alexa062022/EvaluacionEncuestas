@@ -13,10 +13,10 @@
           .ToolBar(t => t.Search().Text("Buscar.."))
           .Columns(columns =>
           {
-              columns.Bound(p => p.IdFormulario).Width(40).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
-              columns.Bound(p => p.NombreSistema).Width(40).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
-              columns.Bound(p => p.DescPregunta).Width(200).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });              
-              
+              columns.Bound(p => p.IdFormulario).Width(20).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              columns.Bound(p => p.NombreSistema).Width(25).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              columns.Bound(p => p.DescPregunta).Width(100).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              columns.Bound(p => p.enlace).Width(60).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
           })
           .ToolBar(tools => tools.Excel().Text("Exportar a Excel"))
               .HtmlAttributes(new { style = "height:750px; font-size: 16px;" })

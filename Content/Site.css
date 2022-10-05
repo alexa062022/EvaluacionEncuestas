@@ -15,7 +15,17 @@ min-height:1000px;
     flex-grow: 1;
     justify-content: space-around;
 }
+/* *************** Pagina principal de Evaluacion de Servicios **************************** */
+.bannerBoton {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    max-height: auto;    
+}
+.bannerBoton:hover {
+    box-shadow: 0 4px 8px 0 #838383, 0 6px 20px 0 #838383;
+}
 
+/* **************************************************************************************** */
 _:-ms-fullscreen, :root .body-content {
     min-height: 100vh;
     overflow: hidden;

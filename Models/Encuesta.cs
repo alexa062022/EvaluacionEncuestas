@@ -34,7 +34,11 @@ namespace EvaluacionServicios.Models
         [Display(Name = "Pregunta")]
         public string DescPregunta { get; set; }
 
-        
+        public int Justificacion { get; set; } //1 = agregar justificacion, 0 = sin justificacion 
+
+        [Display(Name = "Enlace")]
+        public string enlace { get; set; }
+
         public virtual ICollection<Encuesta> lstEncuesta { get; set; }
     }
 }

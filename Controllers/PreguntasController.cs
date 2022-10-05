@@ -53,21 +53,23 @@ namespace EvaluacionServicios.Controllers
         }
         // POST: Preguntas/Edit/5
         [HttpPost]
-        public ActionResult Edit(int idPregunta, string preguntaEditar, int Activo)
+        public ActionResult Edit(int idPregunta, string preguntaEditar, int Activo, int justifica2)
         {
             try
             {
-                int resultadoUpdate;
-                resultadoUpdate = objPreguntas.EditarPregunta(idPregunta, preguntaEditar, Activo);
+                int resultadoUpdate;               
+                    
+                resultadoUpdate = objPreguntas.EditarPregunta(idPregunta, preguntaEditar, Activo, justifica2);
 
                 if (resultadoUpdate == -1)
-                {
+                 {
                     TempData["error"] = "Error: Ya existe esa pregunta en la base de datos.";
-                }
-                else
-                {
+                 }
+                 else
+                 {
                     TempData["Correcto"] = "Se modificó la pregunta de manera correcta";
-                }
+                 }
+                
             }
             catch
             {
@@ -75,7 +77,13 @@ namespace EvaluacionServicios.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        [HttpPost]
+        public JsonResult VerificaPreg(int idpreg)
+        {
+            int resultadoSelect;
+            resultadoSelect = objPreguntas.BuscarPregunta(idpreg);
+            return Json(resultadoSelect);
+        }
         private Preguntas ObtenerListaPreguntas()
         {
             Preguntas preguntasResult = new Preguntas();

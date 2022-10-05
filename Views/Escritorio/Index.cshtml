@@ -3,5 +3,98 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2 class="mt-5">Sistema Evaluación de Servicios</h2>
+<hr class="mb-3" />
 
+<div class="container">
+    <div class="row ">
+        <div class="card bannerBoton" style="margin-right:30px;">
+            <a title="Ir a la página de Encuesta" href="@Url.Action("Index", "PregPorForm")" style="text-decoration: none; color:black;">
+                <div class="card-body">
+                    <h5 class="card-title">Encuestas</h5>
+                    <p class="card-text">Crear una nueva encuesta o ver las encuestas existentes.</p>
+                </div>
+                <img src="~/Images/encuesta.png" class="card-img-bottom" width="253" height="221" alt="card-img-bottom">
+            </a>
+        </div>
+
+        <div class="card bannerBoton" >
+            <a title="Ir a la página de Reportes" href="@Url.Action("Index", "Reportes")" style="text-decoration: none; color:black;">
+                <div class="card-body">
+                    <h5 class="card-title">Reportes</h5>
+                    <p class="card-text">Generar reportes de encuestas existentes.</p>
+                </div>
+                <img src="~/Images/grafico.png" class="card-img-bottom" width="253" height="221" alt="card-img-bottom">
+            </a>
+        </div>
+    </div>
+
+    <h3 class="mt-4">Catálogos</h3>
+    <hr class="mb-3" />
+    <div class="row ">
+        <div class="card bannerBoton" style="margin-right:30px;">
+            <a title="Ir a la página de Sistemas" href="@Url.Action("Index", "Sistemas")" style="text-decoration: none; color:black;">
+                <div class="card-body">
+                    <h5 class="card-title">Sistemas</h5>
+                    <p class="card-text">Mostrar, agregar, y modificar sistemas.</p>
+                </div>
+                <img src="~/Images/sistemas.png" class="card-img-bottom" width="253" height="221" alt="card-img-bottom">
+            </a>
+        </div>
+        <div class="card bannerBoton" style="margin-right: 30px;">
+            <a title="Ir a la página de Formularios" href="@Url.Action("Index", "Formulario")" style="text-decoration: none; color:black;">
+                <div class="card-body">
+                    <h5 class="card-title">Formularios</h5>
+                    <p class="card-text">Mostrar, agregar, y modificar formularios.</p>
+                </div>
+                <img src="~/Images/form.png" class="card-img-bottom" width="253" height="221" alt="card-img-bottom">
+            </a>
+        </div>
+        <div class="card bannerBoton" >
+            <a title="Ir a la página de Preguntas" href="@Url.Action("Index", "Preguntas")" style="text-decoration: none; color:black;">
+                <div class="card-body">
+                    <h5 class="card-title">Preguntas</h5>
+                    <p class="card-text">Mostrar, agregar, y modificar preguntas.</p>
+                </div>
+                <img src="~/Images/preguntas.png" class="card-img-bottom" width="253" height="221" alt="card-img-bottom">
+            </a>
+        </div>
+
+
+    </div>
+    @*<div class="row">
+            <div class="item_mantenimiento col-lg-3 col-sm-12 col-md-6">
+                <div class="imagenesLink">
+                    <a title="Ir al mantenimiento de sistemas" href="@Url.Action("Index", "Sistemas")">
+                        <i class="fas fa-laptop-code fa-3x"></i>
+                    </a>
+                </div>
+                <div class="enlaces">
+                    <p>Ver, agregar, y modificar sistemas</p>
+                    @Html.ActionLink("Sistemas", "Index", "Sistemas", new object { }, new { @class = "irA" })
+                </div>
+            </div>
+            <div class="item_mantenimiento col-lg-3 col-sm-12 col-md-6">
+                <div class="imagenesLink">
+                    <a title="Ir al mantenimiento de formularios" href="@Url.Action("Index", "Formulario")">
+                        <i class="fab fa-wpforms fa-3x"></i>
+                    </a>
+                </div>
+                <div class="enlaces">
+                    <p>Ver, agregar, y modificar formularios</p>
+                    @Html.ActionLink("Formulario", "Index", "Formularios", new object { }, new { @class = "irA" })
+                </div>
+            </div>
+            <div class="item_mantenimiento col-lg-3 col-sm-12 col-md-6">
+                <div class="imagenesLink">
+                    <a title="Ir al mantenimiento de preguntas" href="@Url.Action("Index", "Preguntas")">
+                        <i class="fas fa-question fa-3x"></i>
+                    </a>
+                </div>
+                <div class="enlaces">
+                    <p>Ver, agregar, y modificar preguntas</p>
+                    @Html.ActionLink("Preguntas", "Index", "Preguntas", new object { }, new { @class = "irA" })
+                </div>
+            </div>
+        </div>*@
+</div>
