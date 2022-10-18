@@ -290,6 +290,7 @@
     <Content Include="Views\Encuesta\Create.cshtml" />
     <Content Include="Views\Shared\_LayoutEncuesta.cshtml" />
     <Content Include="Views\PregPorForm\_listaEncuestas.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

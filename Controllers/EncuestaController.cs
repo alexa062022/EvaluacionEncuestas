@@ -7,6 +7,7 @@ using EvaluacionServicios.Models;
 using EvaluacionServicios.Models.DAL;
 using System.Net;
 using Kendo.Mvc.UI;
+using System.Text.RegularExpressions;
 
 namespace EvaluacionServicios.Controllers
 {
@@ -68,9 +69,11 @@ namespace EvaluacionServicios.Controllers
         // POST: Encuesta/Guardar
         [HttpPost]
         public ActionResult GuardarRespuestas(FormCollection collection)
-        { 
+        {            
             string idForm = "";
             string listaRespuestas = "";
+            bool resultIsMatch = false;            
+            
             try
             {
                 foreach (var key in collection.AllKeys) //extraer la informacion del formulario
@@ -83,13 +86,29 @@ namespace EvaluacionServicios.Controllers
                     {
                         if ((key.Contains("radio")) || (key.Contains("respuesta")))
                         {
-                            listaRespuestas = listaRespuestas + "|" + collection[key];
+                            resultIsMatch = Regex.IsMatch(collection[key], "[A-Za-z0-9]"); //verifica que haya al menos 1 letra o numero en el textarea
+                            if (resultIsMatch)
+                            {
+                                listaRespuestas = listaRespuestas + "|" + collection[key];
+                            }
+                            else
+                            {
+                                listaRespuestas = listaRespuestas + "|" + "0" + "]";// agrega cero, el campo esta vacio tiene solo espacios o simbolos
+                            }
                         }
                         else
                         {
                             if (key.Contains("justifica"))
                             {
-                                listaRespuestas = listaRespuestas + "|" + collection[key] + "]";
+                                resultIsMatch = Regex.IsMatch(collection[key], "[A-Za-z0-9]"); //verifica que haya al menos 1 letra o numero en el textarea
+                                if (resultIsMatch) 
+                                {
+                                    listaRespuestas = listaRespuestas + "|" + collection[key] + "]";// agrego el valor del campo                                    
+                                }
+                                else 
+                                {
+                                    listaRespuestas = listaRespuestas + "|" + "0" + "]";// agrega cero, el campo esta vacio tiene solo espacios o simbolos
+                                }                                
                             }
                             else
                             {
