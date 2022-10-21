@@ -1,0 +1,133 @@
+﻿@*@model GestionLegalV3.Models.Usuario*@
+
+@{
+
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Iniciar sesión | Gestión Legal </title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    @Scripts.Render("~/bundles/jquery")
+
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Content/Site.css")
+    <link href="~/Content/all.min.css" rel="stylesheet" />
+    <link href="~/Content/estilos.css" rel="stylesheet" />
+    <link href="~/Content/estilosLogin.css" rel="stylesheet" />
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+            function isIE() {
+                ua = navigator.userAgent;
+                /* MSIE used to detect old browsers and Trident used to newer ones*/
+                var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+
+                return is_ie;
+            }
+            /* Create an alert to show if the browser is IE or not */
+            if (isIE()) {
+
+                $("#mensaje").html('<div class="alert alert-danger row my-5" role="alert"><div class="col-1"> <i class="fa-solid fa-triangle-exclamation fa-3x"></i></div><div class="col-11 fs-4">Esta aplicación no es compatible con Internet explorer, para un correcto funcionamiento, por favor utilícela en otro navegador o comuníquese con el Departamento de tecnologías de información</div></div>');
+            }
+
+
+        });
+
+
+        function mostrarPassword() {
+            var cambio = document.getElementById("Password");
+            if (cambio.type == "password") {
+                cambio.type = "text";
+                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+            } else {
+                cambio.type = "password";
+                $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+            }
+        }
+        $(document).ready(function () {
+            //CheckBox mostrar contraseña
+            $('#ShowPassword').click(function () {
+                $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+            });
+        });
+
+    </script>
+    <link rel="icon" type="image/png" href="~/Images/favIcon.png" title="Gesti&oacute;n Legal" sizes="45x45">
+</head>
+<body>
+
+
+
+
+    @using (Html.BeginForm("Autenticar", "Login", FormMethod.Post))
+    {
+
+
+        <div class="container">
+            <div id="mensaje">
+            </div>
+
+            <div class="row justify-content-sm-center mt-5">
+                <div class="col-4">
+                    <div class="card border-info">
+                        <div class="card-header text-center">
+                            <i class="fas fa-id-card-alt"></i>  |  Iniciar Sesi&oacute;n
+                        </div>
+                        <div class="card-body text-center">
+                            <i class="fa-solid fa-scale-unbalanced-flip fa-5x my-5"></i>
+                            <hr class="mt-3" />
+                            <h1 class="mb-4 mt-4">Gesti&oacute;n | <span>Legal</span></h1>
+                            <form class="form-signin">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" title="Digite el usuario con que ingresa a su computadora"><i class="fa-solid fa-user"></i></span>
+                                    @Html.TextBox("Correo", new { placeholder = "USUARIO", @class = "form-control", required = "required", @title = "Digite el usuario con que ingresa a su computadora" })
+                                    @Html.ValidationMessage(" Correo", null, new { @class = "label label-danger" })
+                                    @*@Html.TextBoxFor(x => x.Correo, new { placeholder = "USUARIO", @class = "form-control", required = "required", @title = "Digite el usuario con que ingresa a su computadora" })
+                                        @Html.ValidationMessageFor(x => x.Correo, null, new { @class = "label label-danger" })*@
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" title="Digite la contraseña con la que ingresa a su computadora"><i class="fa-solid fa-lock"></i></span>
+                                    @Html.Password("Password", new { placeholder = "CONTRASEÑA", @class = "form-control", required = "required", @title = "Digite la contraseña con la que ingresa a su computadora" })
+
+                                    @*@Html.PasswordFor(x => x.Password, new { placeholder = "CONTRASEÑA", @class = "form-control", required = "required", @title = "Digite la contraseña con la que ingresa a su computadora" })*@
+                                    <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()">
+                                        <span class="fa fa-eye-slash icon"></span>
+                                    </button>
+                                </div>
+                                <button class="btn boton col-12 mt-4 mb-4" type="submit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presione para ingresar">INGRESAR  <i class="fas fa-long-arrow-alt-right"></i></button>
+                            </form>
+
+                            @if (TempData["Success"] != null)
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    <i class="fas fa-ban"></i> @TempData["Success"].ToString()
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="logo">
+            <img src="~/Images/LogoPGRGris.png" alt="PGR" data-bs-toggle="tooltip" data-bs-placement="left" title="Procuraduría General de la República" />
+        </div>
+    }
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/utilidades.js"></script>
+</body>
+</html>
+
+
+
