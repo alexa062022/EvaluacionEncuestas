@@ -14,7 +14,6 @@
 
     {
 
-
         readonly private SeguridadDAL objSeguridad = new SeguridadDAL();
 
         public int Cedula { get; set; }
@@ -26,17 +25,8 @@
 
         public string Password { get; set; }
 
-        public virtual Rol Rol { get; set; }
-        public int Rol_id { get; set; }
-        public bool EsAreaAgraria { get; set; }
-
-        public bool EsAreaPenal { get; set; }
-
-        public bool EsAreaEtica { get; set; }
-
-        public bool EsJefe { get; set; }
-
-        public int DescripcionRol { get; set; }
+        //public virtual Rol Rol { get; set; }
+        public int Rol_id { get; set; }      
 
 
 

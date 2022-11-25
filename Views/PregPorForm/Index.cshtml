@@ -151,6 +151,7 @@
                         '<td> <a href="#" class="eliminar">Eliminar</a> </td>' +
                         '</tr>';
                     $('#tablaPregunta tbody').append(htmlTags);
+                   
                 }
             }
             if (mensaje != "Por favor complete los siguientes espacios:") {
@@ -158,6 +159,7 @@
                 $("#mensajeAlerta").html(mensaje);
                 $('#mensajeValidacion').modal('show');
             }
+            
         });
 
         $("#tablaPregunta").on("click", ".eliminar", function (e) {

@@ -1,4 +1,4 @@
-﻿@*@model GestionLegalV3.Models.Usuario*@
+﻿@model EvaluacionServicios.Models.Usuario
 
 @{
 
@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Iniciar sesión | Gestión Legal </title>
+    <title>Iniciar sesión | Evaluacion de Servicios </title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -63,7 +63,7 @@
         });
 
     </script>
-    <link rel="icon" type="image/png" href="~/Images/favIcon.png" title="Gesti&oacute;n Legal" sizes="45x45">
+    <link rel="icon" type="image/png" href="~/Images/favIcon.png" title="Evaluación de Servicios" sizes="45x45">
 </head>
 <body>
 
@@ -84,23 +84,20 @@
                         <div class="card-header text-center">
                             <i class="fas fa-id-card-alt"></i>  |  Iniciar Sesi&oacute;n
                         </div>
-                        <div class="card-body text-center">
-                            <i class="fa-solid fa-scale-unbalanced-flip fa-5x my-5"></i>
+                        <div class="card-body text-center">                            
+                            <img src="~/Images/LogoPGRGris.png" alt="Logo de la Procuraduría General de la República" data-bs-toggle="tooltip" data-bs-placement="left" />
+
                             <hr class="mt-3" />
-                            <h1 class="mb-4 mt-4">Gesti&oacute;n | <span>Legal</span></h1>
+                            <h1 class="mb-4 mt-4">Evaluación de Servicios</h1>
                             <form class="form-signin">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" title="Digite el usuario con que ingresa a su computadora"><i class="fa-solid fa-user"></i></span>
-                                    @Html.TextBox("Correo", new { placeholder = "USUARIO", @class = "form-control", required = "required", @title = "Digite el usuario con que ingresa a su computadora" })
-                                    @Html.ValidationMessage(" Correo", null, new { @class = "label label-danger" })
-                                    @*@Html.TextBoxFor(x => x.Correo, new { placeholder = "USUARIO", @class = "form-control", required = "required", @title = "Digite el usuario con que ingresa a su computadora" })
-                                        @Html.ValidationMessageFor(x => x.Correo, null, new { @class = "label label-danger" })*@
+                                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" title="Digite el usuario con que ingresa a su computadora"><i class="fas fa-user"></i></span>
+                                    @Html.TextBoxFor(x => x.Correo, new { placeholder = "USUARIO", @class = "form-control", required = "required", @title = "Digite el usuario con que ingresa a su computadora" })
+                                    @Html.ValidationMessageFor(x => x.Correo, null, new { @class = "label label-danger" })
                                 </div>
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" title="Digite la contraseña con la que ingresa a su computadora"><i class="fa-solid fa-lock"></i></span>
-                                    @Html.Password("Password", new { placeholder = "CONTRASEÑA", @class = "form-control", required = "required", @title = "Digite la contraseña con la que ingresa a su computadora" })
-
-                                    @*@Html.PasswordFor(x => x.Password, new { placeholder = "CONTRASEÑA", @class = "form-control", required = "required", @title = "Digite la contraseña con la que ingresa a su computadora" })*@
+                                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" title="Digite la contraseña con la que ingresa a su computadora"><i class="fas fa-lock"></i></span>
+                                    @Html.PasswordFor(x => x.Password, new { placeholder = "CONTRASEÑA", @class = "form-control", required = "required", @title = "Digite la contraseña con la que ingresa a su computadora" })
                                     <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()">
                                         <span class="fa fa-eye-slash icon"></span>
                                     </button>
@@ -120,9 +117,7 @@
                 </div>
             </div>
         </div>
-        <div id="logo">
-            <img src="~/Images/LogoPGRGris.png" alt="PGR" data-bs-toggle="tooltip" data-bs-placement="left" title="Procuraduría General de la República" />
-        </div>
+        
     }
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     <script src="~/Scripts/utilidades.js"></script>

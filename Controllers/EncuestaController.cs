@@ -21,6 +21,7 @@ namespace EvaluacionServicios.Controllers
         }
 
         // GET: Encuesta/Create
+        [HttpPost]
         public ActionResult Create()
         {
             return View();

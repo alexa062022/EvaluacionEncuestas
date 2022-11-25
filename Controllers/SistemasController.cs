@@ -7,10 +7,11 @@ using EvaluacionServicios.Models;
 using EvaluacionServicios.Models.DAL;
 using System.Net;
 using Kendo.Mvc.UI;
-//using EvaluacionServicios.Tags;
+using EvaluacionServicios.Tags;
 
 namespace EvaluacionServicios.Controllers
 {
+    [AutenticadoPages]
     public class SistemasController : Controller
     {
         SistemasDAL objsistemas = new SistemasDAL();

@@ -1,0 +1,53 @@
+﻿@model EvaluacionServicios.Models.Reportes
+@{
+    ViewBag.Title = "Reportes";
+}
+<h2 class="mt-5">Reportes</h2>
+<hr class="mb-3" />
+<p class="mt-5">A continuación se muestra una lista de formularios con encuestas asociadas, seleccione el enlace (Crear Reportes) para crear el reporte correspondiente a dicho formulario.</p>
+
+<style>
+    .k-grid .k-grid-search {
+        display: flex;
+        margin-left: auto;
+        margin-right: 0;
+    }
+</style>
+
+@(Html.Kendo().Grid(Model.lstReporte)
+          .Name("grdReportes")
+          .ToolBar(t => t.Search().Text("Buscar.."))
+          .Columns(columns =>
+          {
+              columns.Bound(p => p.NombreSistema).Width(40).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              columns.Bound(p => p.IdFormulario).Width(20).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              columns.Bound(p => p.FechaFormulario).Format("{0:dd/MM/yyyy}").Width(20).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              //columns.Bound(p => p.IdFormulario).HeaderHtmlAttributes(new { @class = "encabezadoTabla" }).ClientTemplate("<a href='" + Url.Action("Create", "Reportes", new { Id = "#= IdFormulario #" }) + "' target=_self >Crear Reporte</a>").Title("Acciones").Filterable(false).Width(20);
+              columns.Bound(p => p.IdFormulario).HeaderHtmlAttributes(new { @class = "encabezadoTabla" }).ClientTemplate("<a href='" + Url.Action("Create", "Reportes", new { form = "#= IdFormulario #" }) + "' target=_self >Crear Reporte</a>").Title("Acciones").Filterable(false).Width(20);
+          })
+          .ToolBar(tools => tools.Excel().Text("Exportar a Excel"))
+              .HtmlAttributes(new { style = "height:750px; font-size: 16px;" })
+              .Pageable(pageable => pageable
+              .Input(true)
+              .Numeric(false)
+          )
+              .Excel(excel => excel
+              .FileName("ListadoDeFormularios.xlsx")
+              .Filterable(true)
+              .AllPages(true)
+              .ProxyURL(Url.Action("Exportar_Result_Excel"))
+          )
+             .Sortable()
+             .Scrollable(scr => scr.Height(650))
+             .Filterable()
+             .DataSource(dataSource => dataSource
+             .Ajax()
+             .PageSize(20)
+             .ServerOperation(false)
+            )
+)
+@*<script type="text/javascript">
+
+    </script>*@
+
+

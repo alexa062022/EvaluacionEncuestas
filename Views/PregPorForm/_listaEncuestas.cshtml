@@ -16,7 +16,8 @@
               columns.Bound(p => p.IdFormulario).Width(20).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
               columns.Bound(p => p.NombreSistema).Width(25).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
               columns.Bound(p => p.DescPregunta).Width(100).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
-              columns.Bound(p => p.enlace).Width(60).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              //columns.Bound(p => p.enlace).Width(60).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
+              columns.Bound(p => p.enlace).HeaderHtmlAttributes(new { @class = "encabezadoTabla" }).ClientTemplate("<a href='#= enlace #' target=_blank >Ver Encuesta</a>").Title("Enlace").Filterable(false).Width(35);
           })
           .ToolBar(tools => tools.Excel().Text("Exportar a Excel"))
               .HtmlAttributes(new { style = "height:750px; font-size: 16px;" })

@@ -3,86 +3,141 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.DirectoryServices;
+using System.Web.Configuration;
+using EvaluacionServicios.Models;
+using EvaluacionServicios.Models.DAL;
+using EvaluacionServicios.Tags;
 
 namespace EvaluacionServicios.Controllers
 {
+    [HandleError]
+    [NoLoginAttribute]
     public class LoginController : Controller
     {
-        // GET: Login
+        string _path;
+        string _filterAttribute;
+        private Usuario um = new Usuario();
+
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Login/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Vista()
         {
             return View();
         }
 
-        // GET: Login/Create
-        public ActionResult Create()
+        public ActionResult Salir()
         {
-            return View();
+            Helper.SessionHelper.DestroyUserSession();
+            return View("Index");
         }
 
-        // POST: Login/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public string formatearPath(string strPath, bool boolDominios)
         {
+            string strFormattedPath = "";
+            string[] aTipoGrupo, aTemp = new string[2];
+            int nCont;
+
             try
             {
-                // TODO: Add insert logic here
+                // Se obtiene los distintos grupos en un arreglo, vienen de la forma tipo=NombreGrupo
 
-                return RedirectToAction("Index");
+                aTipoGrupo = Microsoft.VisualBasic.Strings.Split(strPath, ",");
+                for (nCont = 0; nCont <= aTipoGrupo.Length - 1; nCont++)
+                {
+                    aTemp = Microsoft.VisualBasic.Strings.Split(aTipoGrupo[nCont], "=");
+                    if (!((!boolDominios) & aTemp[0] == "DC"))
+                        strFormattedPath = aTemp[1] + "|" + strFormattedPath;
+                }
+
+                if (strFormattedPath.Length > 0)
+                    strFormattedPath = strFormattedPath.Substring(0, strFormattedPath.Length - 1);
+
+                return strFormattedPath;
             }
-            catch
+            catch (Exception Ex)
             {
-                return View();
+                throw Ex;
             }
         }
 
-        // GET: Login/Edit/5
-        public ActionResult Edit(int id)
+        public string RealizarAutenticacion(string strLogin, string strPassword)
         {
-            return View();
-        }
+            DirectoryEntry dirEntEntrada;
+            SearchResult srBusqueda;
+            string strFormatDir;
+            string DomainAndUsername;
+            string[] strResultado = new string[4];
+            string strUsuario;
+            string bandera = "False";
 
-        // POST: Login/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
             try
             {
-                // TODO: Add update logic here
+                DomainAndUsername = System.Web.Configuration.WebConfigurationManager.AppSettings["Dominio"].ToString() + @"\" + strLogin;
+                dirEntEntrada = new DirectoryEntry("LDAP://" + System.Web.Configuration.WebConfigurationManager.AppSettings["path"].ToString(), DomainAndUsername, strPassword);
+                DirectorySearcher search = new DirectorySearcher(dirEntEntrada);
 
-                return RedirectToAction("Index");
+                search.Filter = "(SAMAccountName=" + strLogin + ")";
+                // search.PropertiesToLoad.Add("Mail")
+                srBusqueda = search.FindOne();
+
+                _path = srBusqueda.Path;
+                _filterAttribute = System.Convert.ToString(srBusqueda.Properties["cn"][0]);
+                strFormatDir = formatearPath(_path, false);
+                strUsuario = _filterAttribute;
+
+                if ((strUsuario == null))
+                    bandera = "False";
+                else
+                    bandera = strUsuario;
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                strResultado[0] = ("");
             }
+
+            return bandera;
         }
 
-        // GET: Login/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: Login/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Autenticar(Usuario model)
         {
-            try
+
+            var rm = new ResponseModel();
+
+            if (ModelState.IsValid)
             {
-                // TODO: Add delete logic here
+                this.um.Correo = model.Correo;
+                this.um.Password = model.Password;
+                string usuario = RealizarAutenticacion(model.Correo, model.Password);
 
-                return RedirectToAction("Index");
+              if (usuario != "False")
+                {
+                    Session["Cedula"] = null;
+                    rm = um.Autenticarse();
+
+                    if (rm.response)
+                    {
+                        rm.href = Url.Content("~/Escritorio");
+                    }
+                }
             }
-            catch
+            else
             {
-                return View();
+                rm.SetResponse(false, "Debe llenar los campos para poder autenticarse.");
+            }
+
+            if (rm.response)
+            {
+                return RedirectToAction("Index", "Escritorio");
+            }
+            else
+            {
+                TempData["Success"] = "Acceso Denegado";
+                return View("Index");
             }
         }
     }

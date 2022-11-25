@@ -21,9 +21,20 @@
     @*<script src="~/Scripts/UtilidadesGenericas.js"></script>*@
 
     <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var Dominio = '@System.Configuration.ConfigurationManager.AppSettings["Prod"]';
+        });
+    </script>
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark barraMenu">
+        @{
+            int perfil = EvaluacionServicios.Models.Common.FrontUser.Get().Rol_id;
+
+        }
         <div class="container">
             @Html.ActionLink("Evaluación de Servicios PGR", "Index", "Escritorio", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,34 +43,39 @@
 
             <div class="navbar-collapse collapse d-flex justify-content-between">
                 <ul class="nav navbar-nav mr-auto">
-
+                    @if (perfil == 363)
+                    {
                     <li class="nav-item ItemMenuPadre">
-                        @Html.ActionLink("Catálogos", "Index", "Escritorio", null, new { @class = "nav-link" })
+                        
+                        @Html.ActionLink("Catálogos", null, null, null, new { @class = "nav-link" })
                         <ul>
                             <li class="nav-item">@Html.ActionLink("Sistemas", "Index", "Sistemas", null, new { @class = "nav-link" })</li>
                             <li class="nav-item">@Html.ActionLink("Formularios", "Index", "Formulario", null, new { @class = "nav-link" })</li>
                             <li class="nav-item">@Html.ActionLink("Preguntas", "Index", "Preguntas", null, new { @class = "nav-link" })</li>
                         </ul>
                     </li>
-                    <li class="nav-item">@Html.ActionLink("Encuestas", "Index", "PregPorForm", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Reportes", "Index", "Reportes", null, new { @class = "nav-link" })</li>
+
+                        <li class="nav-item">@Html.ActionLink("Encuestas", "Index", "PregPorForm", null, new { @class = "nav-link" })</li>
+                    }                   
+                        <li class="nav-item">@Html.ActionLink("Reportes", "Index", "Reportes", null, new { @class = "nav-link" })</li>
                 </ul>
-                @*@if (Helper.SessionHelper.ExistUserInSession())
-                    {
-                        <div class="d-flex  flex-row-reverse">
-                            <div class="text-center well">
-                                Bienvenido(a), <b>@PGREvaluacion.Models.Common.FrontUser.Get().Nombre</b> [<a href="~/Escritorio/salir">Finalizar sesión</a>]
-                            </div>
+                @if (Helper.SessionHelper.ExistUserInSession())
+                {
+                    <div class="d-flex  flex-row-reverse">
+                        <div class="text-center well">
+                            Bienvenido(a), <b>@EvaluacionServicios.Models.Common.FrontUser.Get().Nombre</b> [<a href="~/Escritorio/salir">Finalizar sesión</a>]
                         </div>
-                    }*@
+                    </div>
+                }
+
             </div>
 
-                @*<ul class="nav nav-pills">
-                </ul>*@
+            @*<ul class="nav nav-pills">
+            </ul>*@
 
         </div>
     </nav>
-    
+
     <main>
         <div class="container body-content">
 
@@ -67,7 +83,7 @@
             @RenderBody()
         </div>
     </main>
-    
+
     <footer class="container-fluid">
 
         <div class="container">
@@ -76,7 +92,7 @@
         </div>
     </footer>
 
-    <script>
+    @*<script>
         $(document).ready(function () {
             $("#responsive-panel").kendoResponsivePanel({
                 breakpoint: 768,
@@ -87,7 +103,7 @@
         function onclick(e) {
             $("#responsive-panel").getKendoResponsivePanel().toggle();
         }
-    </script>
+    </script>*@
 
     @RenderSection("scripts", required: false)
 
