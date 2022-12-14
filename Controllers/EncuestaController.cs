@@ -21,7 +21,7 @@ namespace EvaluacionServicios.Controllers
         }
 
         // GET: Encuesta/Create
-        [HttpPost]
+       
         public ActionResult Create()
         {
             return View();
@@ -94,7 +94,7 @@ namespace EvaluacionServicios.Controllers
                             }
                             else
                             {
-                                listaRespuestas = listaRespuestas + "|" + "0" + "]";// agrega cero, el campo esta vacio tiene solo espacios o simbolos
+                                listaRespuestas = listaRespuestas + "|" + "" ;// agrega espacio, el campo esta vacio tiene solo espacios o simbolos
                             }
                         }
                         else
@@ -108,7 +108,7 @@ namespace EvaluacionServicios.Controllers
                                 }
                                 else 
                                 {
-                                    listaRespuestas = listaRespuestas + "|" + "0" + "]";// agrega cero, el campo esta vacio tiene solo espacios o simbolos
+                                    listaRespuestas = listaRespuestas + "|" + "" + "]";// agrega espacio, el campo esta vacio tiene solo espacios o simbolos
                                 }                                
                             }
                             else

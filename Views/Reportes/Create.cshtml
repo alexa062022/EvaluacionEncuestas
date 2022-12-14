@@ -14,19 +14,20 @@
 <script type="text/javascript">
     kendo.culture("@culture");
 </script>
-@if (TempData["Error"] != null)
-{
+<div id="errores">
     <br />
     <div class="alert alert-danger" role="alert">
         <div class="icono">
             <i class="fas fa-exclamation-circle fa-2x"></i>
         </div>
-        @TempData["Error"].ToString()
+        Error: debe seleccionar la fecha de inicio y fin
     </div>
-}
-@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmReportes" }))
+</div>
+
+@using (Html.BeginForm("Vista", "Reportes", FormMethod.Post, new { id = "frmReportes" }))
 {
     @Html.Hidden("idForm", "")
+    @Html.Hidden("sistema", "")
     <div class="card my-4">
         <div class="card-header">
             <i class="fa-solid fa-gears"></i> Seleccione las fechas en que desea crear el reporte:
@@ -53,15 +54,17 @@
 
                             @(Html.Kendo().DateRangePicker()
                                   .Name("daterangepicker")
-                                  .HtmlAttributes(new { style = "width: 100%", title = "daterangepicker" })
+                                  .HtmlAttributes(new { style = "width: 100%", title = "Seleccione la fecha de inicio y fin" })
                                 .Events(e => e.Change("onChange"))
                                 .Messages(m =>
                                 {
-                                    m.StartLabel("Inicio");
-                                    m.EndLabel("Fin");
+                                    m.StartLabel("Fecha de Inicio");
+                                    m.EndLabel("Fecha de Fin");
                                 })
                                 .Format("dd/MM/yyyy")
                                 .Culture("es-ES")
+                                .Max(DateTime.Now)
+                                .Footer("Hoy - #: kendo.toString(data, 'd') #")
 
                             )
 
@@ -86,37 +89,41 @@
 }
 <script>
     $(document).ready(function () {
+        $("#errores").css("display", "none");
         const valores = window.location.search;
 
         //Creamos la instancia
         const urlParams = new URLSearchParams(valores);
 
-        //Accedemos a los valores
-        var formId = urlParams.get('form');
-       // alert(formId);
-        if (formId == null) {
-            $("#idForm").val(@ViewBag.IdForm);
-           // alert(@ViewBag.IdForm);
-        } else { $("#idForm").val(formId);}
-            //se asigna el valor del formulario seleccionado
+        //Se asigna el valor del idformulario
+        //var formId = urlParams.get('form');
+        $("#idForm").val(urlParams.get('form'));
+        $("#sistema").val(urlParams.get('sist'));
 
-            //se oculta los calendarios
-            $("#calendario").css("display", "none");
-            //funcion al cambiar el radio, muestra o no el calendario en pantalla
-            $('input:radio').change(function () {
-                if (($("input[name='TipoReporte']:checked").val()) == 'completo') {
-
-                    $("#calendario").css("display", "none");
-                } else {
-                    $("#calendario").css("display", "block");
-                }
-            });
-            //funcion del boton submit, asigna los valores y hace el submit
-            $("#btnReporte").click(function () {
-
-                $("#frmReportes").submit();
-            });
+        //se oculta los calendarios
+        $("#calendario").css("display", "none");
+        //funcion al cambiar el radio, muestra o no el calendario en pantalla
+        $('input:radio').change(function () {
+            if (($("input[name='TipoReporte']:checked").val()) == 'completo') {
+                $("#calendario").css("display", "none");
+                $("#errores").css("display", "none");
+            } else {
+                $("#calendario").css("display", "block");
+                $("#errores").css("display", "none");
+            }
         });
+        //funcion del boton submit, valida los campos de fecha y hace el submit
+        $("#btnReporte").click(function () {
+            if ($("input[name='TipoReporte']:checked").val() == 'rango' && ($("#fechaInicio").val().length <= 1 || $("#fechaFin").val().length <= 1)) {
+                $("#errores").css("display", "block");
+            } else {             
+               
+                
+                $("#frmReportes").submit();
+            }
+
+        });
+    });
     //*****************************************************
     // se asigna el valor de fecha inicial y final
     function onChange() {

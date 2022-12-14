@@ -1,7 +1,135 @@
-﻿
+﻿@model List<EvaluacionServicios.Models.Reportes>
 @{
-    ViewBag.Title = "Vista";
+    ViewBag.Title = "Reporte";
+    int num = 0;
+    int op1 = 0;
+    int op2 = 0;
+    int op3 = 0;
+    int op4 = 0;
+    int op5 = 0;
+    string idResp1 = "";
+    string idResp2 = "";
+    string idResp3 = "";
+    string idJust1 = "";
+    string idJust2 = "";
+    string idJust3 = "";
 }
+<div style="margin-top: 40px; ">
+    <h2>Reporte </h2>
+    <hr />
+    <h3 style="font-size: 20px; ">Formulario id: #@ViewBag.IdForm</h3>
+    <h3 style="font-size: 20px; ">Nombre del sistema: @ViewBag.sistema </h3>
+</div>
+<div style="background-color: #F3F3F2; padding: 15px; margin-top: 40px; ">
 
-<h2>Reporte</h2>
+    @foreach (var pregunta in Model)
+    {
+        op1 = pregunta.opcion1;
+        op2 = pregunta.opcion2;
+        op3 = pregunta.opcion3;
+        op4 = pregunta.opcion4;
+        op5 = pregunta.opcion5;
+        num += 1;
+
+        <p style="padding-top:20px; padding-bottom: 20px;">@num) @pregunta.DescPregunta  </p>
+        if (pregunta.IdTipoPregunta == 1)
+        {
+            //se crea el grafico con la informacion de cada opcion
+            <div class="demo-section wide">
+                @(Html.Kendo().Chart()
+                            .Name("chart" + num)
+                                    .Title(title => title
+                                        .Text("Grafica de resultados")
+                                        .Position(ChartTitlePosition.Bottom))
+                            .Legend(legend => legend
+                                .Visible(false)
+                            )
+                            .ChartArea(chart => chart
+                                .Background("transparent")
+                             )
+                            .HtmlAttributes(new { style = "background: center no-repeat url(" + @Url.Content("~/Content/shared/styles/world-map.png") })
+                            .Series(series =>
+                            {
+                                series.Pie(new dynamic[] {
+                                    new {category="Excelente",value=op5,color="#9de219"},
+                                    new {category="Muy Bueno",value=op4,color="#90cc38"},
+                                    new {category="Bueno",value=op3,color="#068c35"},
+                                    new {category="Regular",value=op2,color="#006634"},
+                                    new {category="Malo",value=op1,color="#004d38"}
+
+                                })
+                                .Labels(labels => labels
+                                    .Template("#= category #: \n #= value#")
+                                    .Background("transparent")
+                                    .Visible(true)
+                                )
+                                .StartAngle(150);
+                            })
+                            .Tooltip(tooltip => tooltip
+                                .Visible(true)
+                                .Format("{0} usuarios")
+                            )
+                        )
+            </div>
+            if (pregunta.Justificacion.Length > 1)
+            {
+                idJust1 = "accordionJust" + num;
+                idJust2 = "headingJust" + num;
+                idJust3 = "collapseJust" + num;
+                string s = pregunta.Justificacion;
+                string[] subs = s.Split('|');
+
+                //se crea acordion
+                <div class="accordion" id=@idJust1 >
+                    <div class="accordion-item">
+                        <h2 class="accordion-header acordionStyle" id=@idJust2 >
+                            <button style="background-color: #F3F3F2;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@idJust3" aria-expanded="false" aria-controls=@idJust3>
+                                <b>Ver Justificaciones</b>
+                            </button>
+                        </h2>
+                        <div id=@idJust3 class="accordion-collapse collapse" aria-labelledby=@idJust2 data-bs-parent="#@idJust1" >
+                            <div class="accordion-body">
+                                @foreach (var sub in subs)
+                                {
+                                    <p>@sub</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            //se asignan valores a la variables
+            idResp1 = "accordionResp" + num;
+            idResp2 = "headingResp" + num;
+            idResp3 = "collapseResp" + num;
+            //se agrega las respuestas abiertas
+            string s = pregunta.valorRespuesta;
+            string[] subs = s.Split('|');
+            
+            //Se crea acordion 
+            <div class="accordion" id=@idResp1 >
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id=@idResp2 >
+                            <button style="background-color: #F3F3F2;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@idResp3"  aria-expanded="false" aria-controls=@idResp3>
+                                <b>Ver Respuestas</b> 
+                            </button>
+                        </h2>
+                        <div id=@idResp3 class="accordion-collapse collapse" aria-labelledby=@idResp2 data-bs-parent="#@idResp1">
+                            <div class="accordion-body">
+                                @foreach (var sub in subs)
+                                {
+                                    <p>@sub</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+        }
+    }
+    
+</div>
 

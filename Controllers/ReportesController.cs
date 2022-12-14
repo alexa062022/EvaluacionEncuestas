@@ -29,36 +29,43 @@ namespace EvaluacionServicios.Controllers
            return View();
         }
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Vista(FormCollection collection)
         {
-            string idFormulario = collection["idForm"];
+            ViewBag.IdForm = collection["idForm"];
+            ViewBag.sistema = collection["sistema"];            
+            string id = collection["idForm"];
+            string nombre = collection["sistema"];
 
             try
             {
-                
-                if ((collection["TipoReporte"] == "rango") && ((collection["fechaInicio"] == "0") || (collection["fechaFin"] == "0")))
-                {                                        
-                    TempData["Error"] = "Error: debe asignar una fecha de inicio y fin, cuando utilice la opción de rango de fechas";
-                    ViewBag.IdForm = idFormulario;
-                    return View();                    
+                if(collection["TipoReporte"] == "rango") 
+                { 
+                    DateTime date1 = Convert.ToDateTime(collection["FechaInicio"]);
+                    DateTime date2 = Convert.ToDateTime(collection["FechaFin"]);
+                    int result = DateTime.Compare(date1, date2);
+                    if (result > 0) //verifica si la fecha de inicio es mayor que la fecha fin y da mensaje de error
+                    {
+                        TempData["Error"] = "Error: La fecha de fin no puede ser menor a la fecha de inicio, por favor vuelva a intentarlo";
+                        return RedirectToAction("Index");
+                    }
+                }
+                //llamo a funcion y paso los parametros
+                IEnumerable<Reportes> lstReporte = objReportes.CreateReporte(collection["idForm"], collection["TipoReporte"], collection["fechaInicio"], collection["fechaFin"]);
+                if (lstReporte.Count() == 0)
+                {
+                    TempData["Error"] = "Error: No hay datos relacionados a esa encuesta";
+                    return RedirectToAction("Index");
                 }
                 else
-                {
-                    string listaRespuestas;
-                    foreach (var key in collection.AllKeys) //extraer la informacion del formulario
-                    {
-
-                        listaRespuestas = collection[key];
-
-                    }
-                    return RedirectToAction("Vista");
+                {                        
+                   return View(lstReporte);
                 }
+
             }
             catch
             {
-                TempData["Error"] = "Error de base de datos";
-                ViewBag.IdForm = idFormulario;
-                return View();
+                TempData["Error"] = "Error en base de datos";
+                return RedirectToAction("Index");
             }
 
         }

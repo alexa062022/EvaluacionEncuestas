@@ -105,43 +105,43 @@
                         justifica = "justifica-" + contador;
                         respuesta = "respuesta-" + contador;
 
-                <div class="preg">
-                    <p><b>@contador)  @encuesta.DescPregunta </b> </p>
-                    <input id=@pregunta name=@pregunta type="hidden" value=@encuesta.IdPregunta>
-                    @if (encuesta.IdTipoPregunta == 1)
-                    {
-                        <div class="radioDiv">
-                            <input type="radio" class="btn-check" name=@radio id=@op1 value="1" autocomplete="off" required>
-                            <label class="btn btn-info" for=@op1>1</label>
-
-                            <input type="radio" class="btn-check" name=@radio id=@op2 value="2" autocomplete="off">
-                            <label class="btn btn-info" for=@op2>2</label>
-
-                            <input type="radio" class="btn-check" name=@radio id=@op3 value="3" autocomplete="off">
-                            <label class="btn btn-info" for=@op3>3</label>
-
-                            <input type="radio" class="btn-check" name=@radio id=@op4 value="4" autocomplete="off">
-                            <label class="btn btn-info" for=@op4>4</label>
-
-                            <input type="radio" class="btn-check" name=@radio id=@op5 value="5" autocomplete="off">
-                            <label class="btn btn-info" for=@op5>5</label>
-                        </div>
-                        if (encuesta.Justificacion == 1)
+                        <div class="preg">
+                        <p><b>@contador)  @encuesta.DescPregunta </b> </p>
+                        <input id=@pregunta name=@pregunta type="hidden" value=@encuesta.IdPregunta>
+                        @if (encuesta.IdTipoPregunta == 1)
                         {
-                            <label class="pb-2 pt-4 fw-bold" for=justifica>Justifique su respuesta</label>
-                            <textarea id="@justifica" name="@justifica" rows="2" maxlength="500" style="width:100%;"></textarea>
+                            <div class="radioDiv">
+                                <input type="radio" class="btn-check" name=@radio id=@op1 value="1" autocomplete="off" required>
+                                <label class="btn btn-info" for=@op1>1</label>
+
+                                <input type="radio" class="btn-check" name=@radio id=@op2 value="2" autocomplete="off">
+                                <label class="btn btn-info" for=@op2>2</label>
+
+                                <input type="radio" class="btn-check" name=@radio id=@op3 value="3" autocomplete="off">
+                                <label class="btn btn-info" for=@op3>3</label>
+
+                                <input type="radio" class="btn-check" name=@radio id=@op4 value="4" autocomplete="off">
+                                <label class="btn btn-info" for=@op4>4</label>
+
+                                <input type="radio" class="btn-check" name=@radio id=@op5 value="5" autocomplete="off">
+                                <label class="btn btn-info" for=@op5>5</label>
+                            </div>
+                            if (encuesta.Justificacion == 1)
+                            {
+                                <label class="pb-2 pt-4 fw-bold" for=justifica>Justifique su respuesta</label>
+                                <textarea id="@justifica" name="@justifica" rows="2" maxlength="500" style="width:100%;"></textarea>
+                            }
+                            else
+                            {
+                                <input id=@justifica name=@justifica type="hidden" value="">
+                            }
                         }
                         else
                         {
-                            <input id=@justifica name=@justifica type="hidden" value=0>
+                            <textarea id="@respuesta" name="@respuesta" rows="3" placeholder="Digite aquí su respuesta..." maxlength="500" required style="width:100%;"></textarea>
+                            <input id=@justifica name=@justifica type="hidden" value="">
                         }
-                    }
-                    else
-                    {
-                        <textarea id="@respuesta" name="@respuesta" rows="3" placeholder="Digite aquí su respuesta..." maxlength="500" required style="width:100%;"></textarea>
-                        <input id=@justifica name=@justifica type="hidden" value=0>
-                    }
-                </div>
+                        </div>
                     }
                     @Html.Hidden("IdFormulario")
 

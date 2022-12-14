@@ -29,9 +29,15 @@ namespace EvaluacionServicios.Models
         public int IdTipoPregunta { get; set; }
 
         [Display(Name = "Pregunta")]
-        public string DescPregunta { get; set; }
+        public string DescPregunta { get; set; }        
 
-        public int Justificacion { get; set; } //1 = agregar justificacion, 0 = sin justificacion         
+        public int opcion1 { get; set; }
+        public int opcion2 { get; set; }
+        public int opcion3 { get; set; }
+        public int opcion4 { get; set; }
+        public int opcion5 { get; set; }
+        public string valorRespuesta { get; set; }
+        public string Justificacion { get; set; }
 
         public virtual ICollection<Reportes> lstReporte { get; set; }
     }

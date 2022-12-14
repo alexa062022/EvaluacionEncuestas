@@ -4,6 +4,16 @@
 }
 <h2 class="mt-5">Reportes</h2>
 <hr class="mb-3" />
+@if (TempData["Error"] != null)
+{
+    <br />
+    <div class="alert alert-danger" role="alert">
+        <div class="icono">
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+        </div>
+        @TempData["Error"].ToString()
+    </div>
+}
 <p class="mt-5">A continuación se muestra una lista de formularios con encuestas asociadas, seleccione el enlace (Crear Reportes) para crear el reporte correspondiente a dicho formulario.</p>
 
 <style>
@@ -23,7 +33,7 @@
               columns.Bound(p => p.IdFormulario).Width(20).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
               columns.Bound(p => p.FechaFormulario).Format("{0:dd/MM/yyyy}").Width(20).HeaderHtmlAttributes(new { @class = "encabezadoTabla" });
               //columns.Bound(p => p.IdFormulario).HeaderHtmlAttributes(new { @class = "encabezadoTabla" }).ClientTemplate("<a href='" + Url.Action("Create", "Reportes", new { Id = "#= IdFormulario #" }) + "' target=_self >Crear Reporte</a>").Title("Acciones").Filterable(false).Width(20);
-              columns.Bound(p => p.IdFormulario).HeaderHtmlAttributes(new { @class = "encabezadoTabla" }).ClientTemplate("<a href='" + Url.Action("Create", "Reportes", new { form = "#= IdFormulario #" }) + "' target=_self >Crear Reporte</a>").Title("Acciones").Filterable(false).Width(20);
+              columns.Bound(p => p.IdFormulario).HeaderHtmlAttributes(new { @class = "encabezadoTabla" }).ClientTemplate("<a href='" + Url.Action("Create", "Reportes", new { form = "#= IdFormulario #", sist = "#= NombreSistema #" }) + "' target=_self >Crear Reporte</a>").Title("Acciones").Filterable(false).Width(20);
           })
           .ToolBar(tools => tools.Excel().Text("Exportar a Excel"))
               .HtmlAttributes(new { style = "height:750px; font-size: 16px;" })
