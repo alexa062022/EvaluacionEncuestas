@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvaluacionServicios", "EvaluacionServicios.csproj", "{3D0765D6-D556-4560-BB98-3BBB9D04D997}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helper", "..\..\Helper\Helper.csproj", "{99EAECDF-A49C-492F-ADD1-F3765C14F686}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helper", "..\Helper\Helper.csproj", "{99EAECDF-A49C-492F-ADD1-F3765C14F686}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

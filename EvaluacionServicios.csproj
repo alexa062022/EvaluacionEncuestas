@@ -106,37 +106,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EncuestaController.cs" />
-    <Compile Include="Controllers\EscritorioController.cs" />
-    <Compile Include="Controllers\FormularioController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\PregPorFormController.cs" />
-    <Compile Include="Controllers\PreguntasController.cs" />
-    <Compile Include="Controllers\ReportesController.cs" />
-    <Compile Include="Controllers\SistemasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Common\FrontUser.cs" />
-    <Compile Include="Models\Common\RolesPermisos.cs" />
     <Compile Include="Models\DAL\EncuestaDAL.cs" />
-    <Compile Include="Models\DAL\FormularioDAL.cs" />
-    <Compile Include="Models\DAL\PregPorFormDAL.cs" />
-    <Compile Include="Models\DAL\PreguntasDAL.cs" />
-    <Compile Include="Models\DAL\ReportesDAL.cs" />
-    <Compile Include="Models\DAL\SistemasDAL.cs" />
-    <Compile Include="Models\DAL\TipoPreguntaDAL.cs" />
     <Compile Include="Models\Encuesta.cs" />
-    <Compile Include="Models\Formulario.cs" />
-    <Compile Include="Models\Permiso.cs" />
-    <Compile Include="Models\PregPorForm.cs" />
-    <Compile Include="Models\Preguntas.cs" />
-    <Compile Include="Models\Reportes.cs" />
-    <Compile Include="Models\ResponseModel.cs" />
-    <Compile Include="Models\Rol.cs" />
-    <Compile Include="Models\DAL\SeguridadDAL.cs" />
-    <Compile Include="Models\Sistemas.cs" />
-    <Compile Include="Models\TipoPregunta.cs" />
-    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -148,8 +122,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Tags\AutenticadoAttribute.cs" />
-    <Compile Include="Tags\PermisoAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\all.css" />
@@ -277,12 +249,8 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
-    <Content Include="Views\Escritorio\Index.cshtml" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
-    <Content Include="Views\Sistemas\Index.cshtml" />
-    <Content Include="Views\Sistemas\Create.cshtml" />
-    <Content Include="Views\Sistemas\Edit.cshtml" />
     <Content Include="webfonts\fa-brands-400.svg" />
     <Content Include="webfonts\fa-regular-400.svg" />
     <Content Include="webfonts\fa-solid-900.svg" />
@@ -298,23 +266,14 @@
     <Content Include="webfonts\fa-brands-400.woff" />
     <Content Include="webfonts\fa-brands-400.ttf" />
     <Content Include="webfonts\fa-brands-400.eot" />
-    <Content Include="Views\Formulario\Index.cshtml" />
-    <Content Include="Views\Formulario\Create.cshtml" />
-    <Content Include="Views\Formulario\Edit.cshtml" />
-    <Content Include="Views\Preguntas\_listaPreguntas.cshtml" />
-    <Content Include="Views\Preguntas\Index.cshtml" />
-    <Content Include="Views\PregPorForm\Index.cshtml" />
     <Content Include="Views\Encuesta\Index.cshtml" />
     <Content Include="Views\Encuesta\Create.cshtml" />
     <Content Include="Views\Shared\_LayoutEncuesta.cshtml" />
-    <Content Include="Views\PregPorForm\_listaEncuestas.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\Reportes\Index.cshtml" />
-    <Content Include="Views\Reportes\Create.cshtml" />
-    <Content Include="Views\Reportes\Vista.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Common\" />
+    <Folder Include="Tags\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -323,7 +282,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Helper\Helper.csproj">
+    <ProjectReference Include="..\Helper\Helper.csproj">
       <Project>{99eaecdf-a49c-492f-add1-f3765c14f686}</Project>
       <Name>Helper</Name>
     </ProjectReference>

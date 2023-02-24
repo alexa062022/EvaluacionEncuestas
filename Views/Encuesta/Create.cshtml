@@ -1,7 +1,9 @@
 ﻿<!DOCTYPE html>
 <html>
+
 @model List<EvaluacionServicios.Models.Encuesta>
 @{
+
     ViewBag.Title = "Create";
     Layout = null;
     int contador = 0;
@@ -70,117 +72,128 @@
 </head>
 
 <body>
+    @if (ViewBag.NombreSistema == null)
+    {
+        <h2 style="padding-top:70px; padding-bottom:5px; padding-left:50px;">Oops!!..Se ha presentado un error</h2>
+        <hr />
+        <div style="background-color:cornflowerblue";>
+            <p style="padding:50px; color:white";>Los sentimos, se ha producido un error, por favor vuelva a intentarlo</p>
+        </div>
+    }
+    else
+    {
+        <header>
+            <img class="logo" src="~/Images/logo.png" alt="Logo de la Procuraduría General de la República">
+            <h1 class="titulo1">Encuesta de @ViewBag.NombreSistema</h1>
+            <p class="titulo2">@ViewBag.Descripcion</p>
+        </header>
+        <main id="divMain">
 
-    <header>        
-        <img class="logo" src="~/Images/logo.png" alt="Logo de la Procuraduría General de la República">       
-        <h1 class="titulo1">Encuesta de @ViewBag.NombreSistema</h1>
-        <p class="titulo2">@ViewBag.Descripcion</p>
-    </header>
-    <main id="divMain">
-        
-        <div class="header2"></div>
-        <div id="divForm">
-            <h2 class="inst">Instrucciones Generales:</h2>
-            <ol class="instList">
-                <li>Lea cuidadosamente las preguntas.</li>
-                <li>Seleccione el boton que corresponde a su respuesta o digite la respuesta.</li>
-                <li>De click en el boton enviar, recuerde que todas las preguntas debe tener una respuesta asociada para que la informacion sea enviada.</li>
-            </ol>
-           
-            <p class="total">Total de Preguntas: @Model.Count</p>
+            <div class="header2"></div>
+            <div id="divForm">
+                <h2 class="inst">Instrucciones Generales:</h2>
+                <ol class="instList">
+                    <li>Lea cuidadosamente las preguntas.</li>
+                    <li>Seleccione el boton que corresponde a su respuesta o digite la respuesta.</li>
+                    <li>De click en el boton enviar, recuerde que todas las preguntas debe tener una respuesta asociada para que la informacion sea enviada.</li>
+                </ol>
 
-            <div class="formulario">
-                @using (Html.BeginForm("GuardarRespuestas", "Encuesta", FormMethod.Post, new { id = "frmEncuesta" }))
-                {
-                    foreach (var encuesta in Model)
+                <p class="total">Total de Preguntas: @Model.Count</p>
+
+                <div class="formulario">
+                    @using (Html.BeginForm("GuardarRespuestas", "Encuesta", FormMethod.Post, new { id = "frmEncuesta" }))
                     {
-                        contador += 1;
-                        pregunta= "pregunta-" + contador;
-                        radio = "radio-" + contador;
-                        op1 = "Op1-" + contador;
-                        op2 = "Op2-" + contador;
-                        op3 = "Op3-" + contador;
-                        op4 = "Op4-" + contador;
-                        op5 = "Op5-" + contador;
-                        justifica = "justifica-" + contador;
-                        respuesta = "respuesta-" + contador;
-
-                        <div class="preg">
-                        <p><b>@contador)  @encuesta.DescPregunta </b> </p>
-                        <input id=@pregunta name=@pregunta type="hidden" value=@encuesta.IdPregunta>
-                        @if (encuesta.IdTipoPregunta == 1)
+                        foreach (var encuesta in Model)
                         {
-                            <div class="radioDiv">
-                                <input type="radio" class="btn-check" name=@radio id=@op1 value="1" autocomplete="off" required>
-                                <label class="btn btn-info" for=@op1>1</label>
+                            contador += 1;
+                            pregunta = "pregunta-" + contador;
+                            radio = "radio-" + contador;
+                            op1 = "Op1-" + contador;
+                            op2 = "Op2-" + contador;
+                            op3 = "Op3-" + contador;
+                            op4 = "Op4-" + contador;
+                            op5 = "Op5-" + contador;
+                            justifica = "justifica-" + contador;
+                            respuesta = "respuesta-" + contador;
 
-                                <input type="radio" class="btn-check" name=@radio id=@op2 value="2" autocomplete="off">
-                                <label class="btn btn-info" for=@op2>2</label>
+                            <div class="preg">
+                                <p><b>@contador)  @encuesta.DescPregunta </b> </p>
+                                <input id=@pregunta name=@pregunta type="hidden" value=@encuesta.IdPregunta>
+                                @if (encuesta.IdTipoPregunta == 1)
+                                {
+                                    <div class="radioDiv">
+                                        <input type="radio" class="btn-check" name=@radio id=@op1 value="1" autocomplete="off" required>
+                                        <label class="btn btn-info" for=@op1>1</label>
 
-                                <input type="radio" class="btn-check" name=@radio id=@op3 value="3" autocomplete="off">
-                                <label class="btn btn-info" for=@op3>3</label>
+                                        <input type="radio" class="btn-check" name=@radio id=@op2 value="2" autocomplete="off">
+                                        <label class="btn btn-info" for=@op2>2</label>
 
-                                <input type="radio" class="btn-check" name=@radio id=@op4 value="4" autocomplete="off">
-                                <label class="btn btn-info" for=@op4>4</label>
+                                        <input type="radio" class="btn-check" name=@radio id=@op3 value="3" autocomplete="off">
+                                        <label class="btn btn-info" for=@op3>3</label>
 
-                                <input type="radio" class="btn-check" name=@radio id=@op5 value="5" autocomplete="off">
-                                <label class="btn btn-info" for=@op5>5</label>
+                                        <input type="radio" class="btn-check" name=@radio id=@op4 value="4" autocomplete="off">
+                                        <label class="btn btn-info" for=@op4>4</label>
+
+                                        <input type="radio" class="btn-check" name=@radio id=@op5 value="5" autocomplete="off">
+                                        <label class="btn btn-info" for=@op5>5</label>
+                                    </div>
+                                    if (encuesta.Justificacion == 1)
+                                    {
+                                        <label class="pb-2 pt-4 fw-bold" for=justifica>Justifique su respuesta</label>
+                                        <textarea id="@justifica" name="@justifica" rows="2" maxlength="500" style="width:100%;"></textarea>
+                                    }
+                                    else
+                                    {
+                                        <input id=@justifica name=@justifica type="hidden" value="">
+                                    }
+                                }
+                                else
+                                {
+                                    <textarea id="@respuesta" name="@respuesta" rows="3" placeholder="Digite aquí su respuesta..." maxlength="500" required style="width:100%;"></textarea>
+                                    <input id=@justifica name=@justifica type="hidden" value="">
+                                }
                             </div>
-                            if (encuesta.Justificacion == 1)
-                            {
-                                <label class="pb-2 pt-4 fw-bold" for=justifica>Justifique su respuesta</label>
-                                <textarea id="@justifica" name="@justifica" rows="2" maxlength="500" style="width:100%;"></textarea>
-                            }
-                            else
-                            {
-                                <input id=@justifica name=@justifica type="hidden" value="">
-                            }
                         }
-                        else
-                        {
-                            <textarea id="@respuesta" name="@respuesta" rows="3" placeholder="Digite aquí su respuesta..." maxlength="500" required style="width:100%;"></textarea>
-                            <input id=@justifica name=@justifica type="hidden" value="">
-                        }
-                        </div>
-                    }
-                    @Html.Hidden("IdFormulario")
+                        @Html.Hidden("IdFormulario")
 
-                    <button type="submit" id="btnenviar" name="btnenviar" class="btn fa botonEnviar" >
-                        ENVIAR
-                    </button>
-                 }
+                        <button type="submit" id="btnenviar" name="btnenviar" class="btn fa botonEnviar">
+                            ENVIAR
+                        </button>
+                    }
+                </div>
             </div>
-        </div>        
-    </main>
-    <footer>2022&copy;Procuraduría General de la República</footer>
+        </main>
+        <footer>2022&copy;Procuraduría General de la República</footer>
+    }
     <script>
-        $(document).ready(function () {            
-           
+
+        $(document).ready(function () {
+
             //funcion para recalcular la altura de algunos elementos
-            function altura() { 
+            function altura() {
                 if (($("#divForm").height()) > 1000) {
-                    $("#divMain").height(($("#divForm").height())-10);                    
-                }                
+                    $("#divMain").height(($("#divForm").height())-10);
+                }
             }
             //se llama a funcion para recalcular altura, al cargar la pagina
             altura();
 
             //asigna valor al campo Idformulario al cargar la página
             $("#IdFormulario").val(@ViewBag.IdForm);
-                     
+
             //funcion jQuery llamada al ser cambiado el tamano de la pagina
             $(window).resize(function () {
                 altura();
             });
             $("textarea").keypress(function (e) { //previene el ingreso de caracteres no permitidos []|
-                
+
                 if ((e.charCode == 124) || (e.charCode == 91) || (e.charCode == 93) ) {
-                    
+
                     return false;
                 }
             });
             $("textarea").on('paste', function (e) { //no permite pegar texto en los textarea, para evitar el ingreso de caracteres no permitidos
-                e.preventDefault();               
+                e.preventDefault();
             })
         });
     </script>
