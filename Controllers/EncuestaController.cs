@@ -35,7 +35,8 @@ namespace EvaluacionServicios.Controllers
             {
                 if (IdFormulario == string.Empty)
                 {
-                    TempData["Error"] = "Error: El URL ingresado es incorrecto";
+                    TempData["Error"] = "Error: El URL es incorrecto";
+                    TempData["Error2"] = "Estimado usuario: el url utilizado es incorrecto, favor revisar o contactar con el administrador.";
                     return RedirectToAction("Index");
                 }
                 else 
@@ -43,7 +44,8 @@ namespace EvaluacionServicios.Controllers
                     IEnumerable<Encuesta> lstEncuesta = objEncuesta.CreateEncuesta(IdFormulario);
                     if (lstEncuesta.Count() == 0)
                     {
-                        TempData["Error"] = "Error: El formulario no existe, esta desactivo, o no tiene una encuesta asociada";
+                        TempData["Error"] = "Encuesta no habilitada";
+                        TempData["Error2"] = "Estimado usuario: La encuesta no existe o ha sido deshabilitada por exceder la fecha límite.";
                         return RedirectToAction("Index");
                     }
                     else 
@@ -62,7 +64,8 @@ namespace EvaluacionServicios.Controllers
             }
             catch
             {
-                TempData["Error"] = "Error de base de datos";
+                TempData["Error"] = "Oops.. Se ha presentando un error de base de datos";
+                TempData["Error2"] = "Estimado usuario: se produjo un error de base de datos, favor intentar nuevamente o contactar con el administrador.";
                 return RedirectToAction("Index");
             }
         }        
