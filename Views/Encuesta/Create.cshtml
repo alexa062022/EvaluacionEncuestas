@@ -168,7 +168,30 @@
     <script>
 
         $(document).ready(function () {
+            //determina el numero de elementos radio que existen en la pagina
+            let ElementosRadio = $(".radioDiv");
+            var totalRadios = ElementosRadio.length;
 
+            //crea un evento click para cada elemento radio
+            for (var i = 1; i <= totalRadios; i++)
+            {
+                var inputRadio = "input[name=radio-" + i + "]"; //asigna el id correcto                               
+
+                $(inputRadio).click(function (){
+                    //alert($(this).attr('id'));
+                    var cadena = $(this).attr('id');  //asigna el id del boton seleccionado
+                    var num = cadena.charAt(4);  // para determinar el numero de pregunta
+                    var inputjustifica = "#justifica-" + num;  //asigna el id del input justifica, de acuerdo al numero de preg
+                    //alert(inputjustifica);
+                    if ($(this).val() == "1" || $(this).val() == "2") {
+                        //$(inputjustifica).css("display", "block");
+                        $(inputjustifica).attr("required", true);
+                    } else {
+                        //$(inputjustifica).css("display", "none");
+                        $(inputjustifica).attr("required", false);
+                    }
+                });
+            }
             //funcion para recalcular la altura de algunos elementos
             function altura() {
                 if (($("#divForm").height()) > 1000) {
